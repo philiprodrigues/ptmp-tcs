@@ -3,8 +3,10 @@ from waflib.Utils import to_list
 
 sys.path.append('waftools')
 
+top='.'
 
-pkg_deps = ['ptmp', 'libzmq','czmq','protobuf']
+
+pkg_deps = ['libzmq','czmq','protobuf','ptmp']
 
 def options(opt):
     opt.load('compiler_c compiler_cxx')
@@ -36,7 +38,7 @@ def build(bld):
     src = bld.path.ant_glob("src/*.cc")
 
     bld.shlib(features='c cxx',
-              includes='inc include ',
+              includes='inc include .',
               rpath = rpath,
               source = src,
               target='ptmp-tcs',
