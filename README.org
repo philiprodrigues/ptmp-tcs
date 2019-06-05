@@ -1,0 +1,8 @@
+#+title: ptmp-tcs: PTMP + Trigger Candidate source
+
+This project tests the TC finder code from  https://github.com/dlast44/ProtoDuneTrigger with PTMP.
+
+* Source
+
+This project includes ProtoDuneTrigger and ~waftools~ as git submodules.  
+

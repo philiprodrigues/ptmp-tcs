@@ -1,0 +1,6 @@
+[submodule "tcs"]
+	path = tcs
+	url = https://github.com/dlast44/ProtoDuneTrigger.git
+[submodule "waftools"]
+	path = waftools
+	url = git@github.com:brettviren/waftools.git
