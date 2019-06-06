@@ -2,7 +2,7 @@
 #define PTMP_TCS_TCFINDER_PDT
 
 #include "ptmp-tcs/api.h"
-#include "tcs/AdjacencyAlgorithms.h"
+#include "pdt/AdjacencyAlgorithms.h"
 
 #include <vector>
 

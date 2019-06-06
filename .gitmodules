@@ -1,5 +1,5 @@
 [submodule "tcs"]
-	path = tcs
+	path = pdt
 	url = https://github.com/dlast44/ProtoDuneTrigger.git
 [submodule "waftools"]
 	path = waftools
