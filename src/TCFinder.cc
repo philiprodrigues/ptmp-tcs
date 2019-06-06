@@ -5,10 +5,19 @@
 
 using json = nlohmann::json;
 
+
 // The actor function
 void tcfinder_proxy(zsock_t* pipe, void* vargs)
 {
     auto config = json::parse((const char*) vargs);
+    std::string method = config["method"];
+    // one day, maybe use named factory.  For now, hard-wired.
+    ptmp::tcs::tcfinder_engine_t* engine = ptmp::tcs::tcfinder_engine(method);
+    if (!engine) {
+        zsys_error("No such TC finder: \"%s\"", method.c_str());
+        return;
+    }
+    
 
     zsock_t* isock = ptmp::internals::endpoint(config["input"].dump());
     zsock_t* osock = ptmp::internals::endpoint(config["output"].dump());
@@ -42,9 +51,16 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
         ptmp::internals::recv(msg, tps); // throws
         int64_t latency = zclock_usecs() - tps.created();
 
-
-        // do something.
-
+        std::vector<ptmp::data::TPSet> output_tps;
+        (*engine)(tps, output_tps);
+        if (output_tps.empty()) {
+            continue;
+        }
+        if (osock) {
+            for (const auto& otps : output_tps) {
+                ptmp::internals::send(osock, otps); // fixme: can throw
+            }
+        }
     }
 
     zpoller_destroy(&pipe_poller);
