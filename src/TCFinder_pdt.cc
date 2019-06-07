@@ -1,5 +1,9 @@
 #include "TCFinder_pdt.h"
+
+// fixme: currently TriggerCandidate.h doesn't include
+// AdjacencyAlgorithms.h but requires it for defining TP
 #include "pdt/AdjacencyAlgorithms.h"
+#include "pdt/TriggerCandidate.h"
 
 using namespace ptmp::tcs::pdt;
 
@@ -78,13 +82,12 @@ void PDUNEAdjacency_engine::operator()(const ptmp::data::TPSet& input_tpset,
     for (const auto& tp : outbound.tps()) {
         pdt_tps.push_back(convert(tp));
     }
-    auto tcvec = PDUNEAdjacency(pdt_tps);
-    // this returns an 8-tuple of ints
+    auto tcvec = TriggerCandidate(pdt_tps);
+    // this returns an 8-tuple of ints which may be empty.
     //     0         1       2       3      4      5     6    7
     // (adjacency, adcpeak, adcsum, tspan, chan1, chan2, t1, t2)
     
-    // Fixme: this is a minimal selection and should be made stronger.
-    if (tcvec.at(0) > 1 and tcvec.at(2) > 0) {
+    if (tcvec.size() == 8) {
         outbound.set_count(1+outbound.count());
         // detid
         outbound.set_created(zclock_usecs());
