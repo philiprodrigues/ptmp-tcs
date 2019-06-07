@@ -86,6 +86,7 @@ void PDUNEAdjacency_engine::operator()(const ptmp::data::TPSet& input_tpset,
     // this returns an 8-tuple of ints which may be empty.
     //     0         1       2       3      4      5     6    7
     // (adjacency, adcpeak, adcsum, tspan, chan1, chan2, t1, t2)
+    zsys_debug("got %ld", tcvec.size());
     
     if (tcvec.size() == 8) {
         outbound.set_count(1+outbound.count());

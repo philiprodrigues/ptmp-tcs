@@ -17,3 +17,6 @@ ptmp::tcs::tcfinder_engine_t* ptmp::tcs::tcfinder_engine(const std::string& name
     // }
     return NULL;
 }
+ptmp::tcs::tcfinder_engine_t::~tcfinder_engine_t()
+{
+}

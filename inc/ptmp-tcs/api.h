@@ -14,7 +14,7 @@ namespace ptmp {
         struct tcfinder_engine_t {
             virtual ~tcfinder_engine_t();
             virtual void operator()(const ptmp::data::TPSet& input_tpset,
-                                    std::vector<ptmp::data::TPSet>& output_tpsets);
+                                    std::vector<ptmp::data::TPSet>& output_tpsets) = 0;
         };
 
         // Look up TC finder engine  by its name.  Throw if not found.

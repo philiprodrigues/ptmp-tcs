@@ -1,12 +1,13 @@
+#!/usr/bin/env waf
+
 import sys
 from waflib.Utils import to_list
 
 sys.path.append('waftools')
 
-top='.'
-
 
 pkg_deps = ['libzmq','czmq','protobuf','ptmp']
+
 
 def options(opt):
     opt.load('compiler_c compiler_cxx')
@@ -25,6 +26,7 @@ def configure(cfg):
 
     cfg.env.CXXFLAGS += ['-std=c++11']
     cfg.env.CXXFLAGS += to_list(cfg.options.cxxflags)
+
 
 def build(bld):
     bld.load('utests')

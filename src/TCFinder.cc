@@ -26,8 +26,9 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
         return;
     }
     
-    zsock_signal(pipe, 0);      // signal ready
     zpoller_t* pipe_poller = zpoller_new(pipe, isock, NULL);
+
+    zsock_signal(pipe, 0);      // signal ready
 
     while (!zsys_interrupted) {
 
@@ -47,6 +48,7 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
             zmsg_destroy(&msg);
             break;
         }
+
         ptmp::data::TPSet tps;
         ptmp::internals::recv(msg, tps); // throws
         int64_t latency = zclock_usecs() - tps.created();
@@ -60,6 +62,7 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
             for (const auto& otps : output_tps) {
                 ptmp::internals::send(osock, otps); // fixme: can throw
             }
+            zsys_debug("got %ld", output_tps.size());
         }
     }
 
