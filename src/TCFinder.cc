@@ -53,16 +53,16 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
         ptmp::internals::recv(msg, tps); // throws
         int64_t latency = zclock_usecs() - tps.created();
 
-        std::vector<ptmp::data::TPSet> output_tps;
-        (*engine)(tps, output_tps);
-        if (output_tps.empty()) {
+        std::vector<ptmp::data::TPSet> output_tpsets;
+        (*engine)(tps, output_tpsets);
+        if (output_tpsets.empty()) {
             continue;
         }
         if (osock) {
-            for (const auto& otps : output_tps) {
-                ptmp::internals::send(osock, otps); // fixme: can throw
+            for (const auto& otpset : output_tpsets) {
+                ptmp::internals::send(osock, otpset); // fixme: can throw
             }
-            zsys_debug("got %ld", output_tps.size());
+            zsys_debug("TCFinder got %ld TPSets", output_tpsets.size());
         }
     }
 
