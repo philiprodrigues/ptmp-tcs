@@ -21,35 +21,53 @@ jobtime=200
 # how long to wait for slow streams, in ms.
 tardy_ms=10000
 
-for n in {601..610}
+# speed of replay.  It gives how many hardware ticks to replay per
+# microsecond.  Ie, 50.0 means normal speed.  I can be artificially
+# slowed or sped up but tardy_ms may require change
+hwtickperusec=50.0
+
+tokill=""
+tpsorted_endpoints=""
+for fn in 601 603 605 607 609
 do
+    oport=9$fn
     $fsource -E 10000 \
-             ifile -f ${database}$n.dump \
-             osock -p PUSH -a bind -e tcp://127.0.0.1:666$n > log.files.$n 2>&1 &
-    
-    # 666n->777n
+             ifile -f ${database}${fn}.dump \
+             osock -p PUSH -a bind -e tcp://127.0.0.1:$oport > log.files.$fn 2>&1 &
+    tokill="$tokill $!"
+
+    iport=$oport
+    oport=8$fn
     $window -c $jobtime -s 3000 -b 150000 \
-            input -p PULL -a connect -e tcp://127.0.0.1:666$n \
-            output -p PUSH -a connect -e tcp://127.0.0.1:777$n > log.window.$n 2>&1 &
+            input -p PULL -a connect -e tcp://127.0.0.1:$iport \
+            output -p PUSH -a connect -e tcp://127.0.0.1:$oport > log.window.$fn 2>&1 &
+    tokill="$tokill $!"
 
-    # 777n->9990
-    $replay -c $jobtime -s 50.0 \
-            input -p PULL -a bind -e tcp://127.0.0.1:777$n \
-            output -p PUSH -a connect -e tcp://127.0.0.1:9990 > log.replay.$n 2>&1 &
-
+    iport=$oport
+    oport=7$fn
+    tpsorted_endpoints="-e tcp://127.0.0.1:$oport $tpsorted_endpoints"
+    $replay -c $jobtime -s $hwtickperusec \
+            input -p PULL -a bind -e tcp://127.0.0.1:$iport \
+            output -p PUSH -a connect -e tcp://127.0.0.1:$oport > log.replay.$fn 2>&1 &
+    tokill="$tokill $!"
 
 done
 
+oport=6666
 $sorted -t $tardy_ms -c $jobtime  \
-        input  -p PULL -a bind -e tcp://127.0.0.1:9990 \
-        output -p PUSH -a bind -e tcp://127.0.0.1:9991 > log.sorted 2>&1 &
+        input  -p PULL -a bind $tpsorted_endpoints \
+        output -p PUSH -a bind -e tcp://127.0.0.1:$oport > log.sorted 2>&1 &
+tokill="$tokill $!"
+iport=$oport
+oport=5555
+$tcfinder -c $jobtime  input -p PULL -a connect -e tcp://127.0.0.1:$iport \
+          output -p PUSH -a bind -e tcp://127.0.0.1:$oport > log.tcfinder 2>&1 &
+tokill="$tokill $!"
 
-$tcfinder -c $jobtime  input -p PULL -a connect -e tcp://127.0.0.1:9991 \
-          output -p PUSH -a bind -e tcp://127.0.0.1:9992 > log.tcfinder 2>&1 &
+iport=$oport
+$recv -v5 -p PULL -a connect -e tcp://127.0.0.1:$iport
 
-
-$recv -v5 -p PULL -a connect -e tcp://127.0.0.1:9992
-
+kill -9 $tokill
 
 
 

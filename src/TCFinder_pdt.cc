@@ -65,7 +65,7 @@ PDUNEAdjacency_engine::~PDUNEAdjacency_engine()
 void PDUNEAdjacency_engine::operator()(const ptmp::data::TPSet& input_tpset,
                                        std::vector<ptmp::data::TPSet>& output_tpsets)
 {
-    ptmp::data::dump(input_tpset, "recv");
+    // ptmp::data::dump(input_tpset, "recv");
 
     const int64_t this_tstart = input_tpset.tstart();
     if (outbound.tps().empty()) {
@@ -83,7 +83,7 @@ void PDUNEAdjacency_engine::operator()(const ptmp::data::TPSet& input_tpset,
         return;
     }
 
-    ptmp::data::dump(outbound, "input");
+    //ptmp::data::dump(outbound, "input");
 
     // ready to process and advance.
     std::vector<TP> pdt_tps;
@@ -109,7 +109,7 @@ void PDUNEAdjacency_engine::operator()(const ptmp::data::TPSet& input_tpset,
         outbound.set_chanend(tcvec.at(5));
         outbound.set_totaladc(tcvec.at(6));
         output_tpsets.push_back(outbound);
-        ptmp::data::dump(outbound, "outbound");
+        //ptmp::data::dump(outbound, "outbound");
     }
     clear(outbound);
     outbound.set_tstart(this_tstart);

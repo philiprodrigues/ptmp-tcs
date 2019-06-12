@@ -58,12 +58,15 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
         if (output_tpsets.empty()) {
             continue;
         }
-        if (osock) {
+        if (osock) {            // allow null for debugging
             for (const auto& otpset : output_tpsets) {
                 ptmp::internals::send(osock, otpset); // fixme: can throw
             }
+        }
+        else {
             zsys_debug("TCFinder got %ld TPSets", output_tpsets.size());
         }
+            
     }
 
     zpoller_destroy(&pipe_poller);
