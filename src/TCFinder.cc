@@ -5,6 +5,8 @@
 
 using json = nlohmann::json;
 
+PTMP_AGENT(ptmp::tcs::TCFinder, tcfinder)
+
 
 // The actor function
 void tcfinder_proxy(zsock_t* pipe, void* vargs)
