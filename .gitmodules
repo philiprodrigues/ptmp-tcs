@@ -2,5 +2,5 @@
 	path = pdt
 	url = https://github.com/dlast44/ProtoDuneTrigger.git
 [submodule "waftools"]
-	path = waftools
+	path = tools
 	url = https://github.com/brettviren/waftools.git
