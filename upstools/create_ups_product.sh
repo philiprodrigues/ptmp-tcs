@@ -22,7 +22,12 @@ if [ -z "$UPS_DIR" -o -z "$PRODUCTS" ]; then
 fi
 QUALS=${1:-e15}
 PRODNAME="$(basename $topdir | tr '-' '_')"
-VERSION="v$(git describe --exact-match --tags $(git log -n1 --pretty='%h') | tr '.' '_')"
+GITTAG=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
+if [ "$?" != "0" ]; then
+    echo "No git tag for current commit. Bailing"
+    exit 1
+fi
+VERSION="v$(echo $GITTAG | tr '.' '_')"
 VERSIONDIR="${DEV_PRODUCTS}/${PRODNAME}/${VERSION}"
 echo "Building into to: $VERSIONDIR"
 # attempt to create what is not there
