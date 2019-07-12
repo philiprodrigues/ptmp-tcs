@@ -223,8 +223,8 @@ fi
 echo Running \"${topdir}/upstools/waf-configure-for-ups.sh ${!PRODNAME_UC_FQ_DIR}\"
 ${topdir}/upstools/waf-configure-for-ups.sh ${!PRODNAME_UC_FQ_DIR} || exit 1
 
-echo Running ${topdir}/waf --notests clean install
-${topdir}/waf --notests clean install || exit 1
+echo Running ${topdir}/waftools/waf --notests clean install
+${topdir}/waftools/waf --notests clean install || exit 1
 
 #    ${topdir}/waf -j1 --alltests || exit 1
 
