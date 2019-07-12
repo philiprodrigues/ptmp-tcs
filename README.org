@@ -4,14 +4,14 @@ This project tests the TC finder code from  https://github.com/dlast44/ProtoDune
 
 * Source
 
-This project includes ProtoDuneTrigger and ~waftools~ as git submodules.  
+This project includes ProtoDuneTrigger (as [[./pdt]]) and ~waftools~ (as [[./tools]]) as git submodules.  
 
 * Build
 
 Just one example, assuming external are installed under ~$HOME/opt/~:
 
 #+BEGIN_EXAMPLE
-  $ alias waf=`pwd`/waftools/waf
+  $ alias waf=`pwd`/tools/waf
   $ waf configure \
     --prefix=$HOME/opt/ptmp \
     --with-ptmp=$HOME/opt/ptmp \
