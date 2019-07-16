@@ -5,9 +5,8 @@
 
 using json = nlohmann::json;
 
-#ifdef PTMP_AGENT
-PTMP_AGENT(ptmp::tcs::TCFinder, tcfinder)
-#endif
+// PTMP_AGENT is added in ptmp 0.0.4.  Older ptmp is no longer supported by ptmp-tcs.
+PTMP_AGENT(ptmp::tcs::TPFilter, filter)
 
 // The actor function
 void filter_proxy(zsock_t* pipe, void* vargs)
@@ -21,7 +20,6 @@ void filter_proxy(zsock_t* pipe, void* vargs)
         return;
     }
     
-
     zsock_t* isock = ptmp::internals::endpoint(config["input"].dump());
     zsock_t* osock = ptmp::internals::endpoint(config["output"].dump());
     if (!isock or !osock) {

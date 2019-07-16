@@ -8,10 +8,10 @@
 
 ptmp::tcs::filter_engine_t* ptmp::tcs::filter_engine(const std::string& name)
 {
-    if (name == "pdune-adjacency") {
+    if (name == "pdune-adjacency-tc") {
         return new ptmp::tcs::pdt::PDUNEAdjacency_engine;
     }
-    if (name == "pdune-adjacency-mlt") {
+    if (name == "pdune-adjacency-td") {
         return new ptmp::tcs::pdt::PDUNEAdjacencyMLT_engine;
     }
     return NULL;
