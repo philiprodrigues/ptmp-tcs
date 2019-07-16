@@ -8,30 +8,26 @@
 namespace ptmp {
     namespace tcs {
 
-        // The TCFinder delegates actual TC finding to other code.  To
-        // allow dynamic choice of what code to use, it is wrapped in
-        // this simple interface.  
-        struct tcfinder_engine_t {
-            virtual ~tcfinder_engine_t();
+        // The TP filter merely marshals messages between sockets and
+        // an "engine" which does the real work.
+        struct filter_engine_t {
+            virtual ~filter_engine_t();
             virtual void operator()(const ptmp::data::TPSet& input_tpset,
                                     std::vector<ptmp::data::TPSet>& output_tpsets) = 0;
         };
 
-        // Look up TC finder engine  by its name.  Throw if not found.
-        tcfinder_engine_t* tcfinder_engine(const std::string& name);
+        // Look up filter engine by its name.  Throw if not found.
+        filter_engine_t* filter_engine(const std::string& name);
 
-        // A TC finder runs a thread which receives and sends TPSets.
-        // The input TPSets are assumed to be in time order and
-        // covering fixed windows in time such as prepared by PTMP's
-        // TPWindow.  If multiple streams of TPSets need combining
-        // they may be done prior to input to TCFinder using TPSorted.
-        // The configuration requires an "input" and "output"
-        // attribute with a "socket" data structure in "standard"
-        // schema.  A "method" gives the TC finder engine to use.
-        class TCFinder {
+        // A TP filter runs a thread which receives, passes them to
+        // its engine and if any are returned, sends those on.  The
+        // configuration requires an "input" and "output" attribute
+        // with a "socket" data structure in "standard" schema.  A
+        // "method" gives the filter engine to use.
+        class TPFilter {
         public:
-            TCFinder(const std::string& config);
-            ~TCFinder();
+            TPFilter(const std::string& config);
+            ~TPFilter();
         private:
             zactor_t* m_actor;
         };

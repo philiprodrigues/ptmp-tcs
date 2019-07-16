@@ -14,10 +14,10 @@ using namespace ptmp::cmdline;
 int main(int argc, char* argv[])
 {
     zsys_init();
-    CLI::App app{"Run TCFinder"};
+    CLI::App app{"Run TC finder"};
 
     std::string method = "pdune-adjacency";
-    app.add_option("-m,--method", method, "The name of the TCFinder method");
+    app.add_option("-m,--method", method, "The name of the TC finder filter method");
 
     int countdown = -1;         // forever
     app.add_option("-c,--count", countdown,
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     std::string cfgstr = jcfg.dump();
 
     {
-        ptmp::tcs::TCFinder proxy(cfgstr);
+        ptmp::tcs::TPFilter proxy(cfgstr);
 
         int snooze = 1000;
         while (countdown != 0) {

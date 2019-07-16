@@ -1,4 +1,4 @@
-#include "TCFinder_pdt.h"
+#include "pdt_engines.h"
 
 // fixme: currently TriggerCandidate.h doesn't include
 // AdjacencyAlgorithms.h but requires it for defining TP
@@ -67,9 +67,10 @@ void PDUNEAdjacency_engine::operator()(const ptmp::data::TPSet& input_tpset,
 {
     // ptmp::data::dump(input_tpset, "recv");
 
-    const int64_t this_tstart = input_tpset.tstart();
+    const ptmp::data::data_time_t this_tstart = input_tpset.tstart();
     if (outbound.tps().empty()) {
         outbound.set_tstart(this_tstart);
+        outbound.set_detid(input_tpset.detid());
         update(outbound, input_tpset);
         return;
     }
@@ -101,13 +102,24 @@ void PDUNEAdjacency_engine::operator()(const ptmp::data::TPSet& input_tpset,
     
     if (tcvec.size() == 8) {
         outbound.set_count(1+outbound.count());
-        // detid
-        outbound.set_created(zclock_usecs());
-        outbound.set_tstart(hwtick_per_internal*std::min(tcvec.at(6), tcvec.at(7)));
-        outbound.set_tspan(hwtick_per_internal*std::abs(tcvec.at(7) - tcvec.at(6)));
+        // detid set on first input
+        outbound.set_created(ptmp::data::now());
+        outbound.set_tstart(this_tstart); // sync input/output time.
+        outbound.set_tspan(twindow);      // means time checked.
         outbound.set_chanbeg(tcvec.at(4));
         outbound.set_chanend(tcvec.at(5));
-        outbound.set_totaladc(tcvec.at(6));
+        outbound.set_totaladc(tcvec.at(2));
+
+        // PDT requires passing the "adjacency" which is not in the
+        // TPSet/TrigPrim model.  So, we cheat.
+        ptmp::data::TrigPrim* newtp = outbound.add_tps();
+        newtp->set_channel(0);
+        newtp->set_tstart(hwtick_per_internal*std::min(tcvec.at(6), tcvec.at(7)));
+        newtp->set_tspan(hwtick_per_internal*std::abs(tcvec.at(7) - tcvec.at(6)));
+        newtp->set_adcsum(tcvec.at(2));
+        newtp->set_adcpeak(tcvec.at(0));
+        newtp->set_flags(PDT_SPECIAL_TP);
+
         output_tpsets.push_back(outbound);
         //ptmp::data::dump(outbound, "outbound");
     }

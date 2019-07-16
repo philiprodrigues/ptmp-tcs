@@ -4,19 +4,18 @@
 // with a truly dynamic named factory.
 
 // engines running https://github.com/dlast44/ProtoDuneTrigger
-#include "TCFinder_pdt.h"
+#include "pdt_engines.h"
 
-ptmp::tcs::tcfinder_engine_t* ptmp::tcs::tcfinder_engine(const std::string& name)
+ptmp::tcs::filter_engine_t* ptmp::tcs::filter_engine(const std::string& name)
 {
     if (name == "pdune-adjacency") {
         return new ptmp::tcs::pdt::PDUNEAdjacency_engine;
     }
-    // if (name == "time-adjacency-counting") {
-    //     return new ptmp::tcs::pdt::time_adjacency_counting_t;
-
-    // }
+    if (name == "pdune-adjacency-mlt") {
+        return new ptmp::tcs::pdt::PDUNEAdjacencyMLT_engine;
+    }
     return NULL;
 }
-ptmp::tcs::tcfinder_engine_t::~tcfinder_engine_t()
+ptmp::tcs::filter_engine_t::~filter_engine_t()
 {
 }

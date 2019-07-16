@@ -10,14 +10,14 @@ PTMP_AGENT(ptmp::tcs::TCFinder, tcfinder)
 #endif
 
 // The actor function
-void tcfinder_proxy(zsock_t* pipe, void* vargs)
+void filter_proxy(zsock_t* pipe, void* vargs)
 {
     auto config = json::parse((const char*) vargs);
     std::string method = config["method"];
     // one day, maybe use named factory.  For now, hard-wired.
-    ptmp::tcs::tcfinder_engine_t* engine = ptmp::tcs::tcfinder_engine(method);
+    ptmp::tcs::filter_engine_t* engine = ptmp::tcs::filter_engine(method);
     if (!engine) {
-        zsys_error("No such TC finder: \"%s\"", method.c_str());
+        zsys_error("No such filter: \"%s\"", method.c_str());
         return;
     }
     
@@ -25,7 +25,7 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
     zsock_t* isock = ptmp::internals::endpoint(config["input"].dump());
     zsock_t* osock = ptmp::internals::endpoint(config["output"].dump());
     if (!isock or !osock) {
-        zsys_error("tcfinder requires socket configuration");
+        zsys_error("filter requires socket configuration");
         return;
     }
     
@@ -37,17 +37,17 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
 
         void* which = zpoller_wait(pipe_poller, -1);
         if (!which) {
-            zsys_info("TCfinder proxy interrupted");
+            zsys_info("filter interrupted");
             break;
         }
         if (which == pipe) {
-            zsys_info("TCFinder proxy got quit");
+            zsys_info("filter got quit");
             break;
         }
 
         zmsg_t* msg = zmsg_recv(isock);
         if (!msg) {
-            zsys_info("TCFinder proxy interrupted");
+            zsys_info("filter interrupted");
             zmsg_destroy(&msg);
             break;
         }
@@ -67,7 +67,7 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
             }
         }
         else {
-            zsys_debug("TCFinder got %ld TPSets", output_tpsets.size());
+            zsys_debug("filter got %ld TPSets", output_tpsets.size());
         }
             
     }
@@ -77,13 +77,13 @@ void tcfinder_proxy(zsock_t* pipe, void* vargs)
     zsock_destroy(&osock);
 } 
 
-ptmp::tcs::TCFinder::TCFinder(const std::string& config)
-    : m_actor(zactor_new(tcfinder_proxy, (void*)config.c_str()))
+ptmp::tcs::TPFilter::TPFilter(const std::string& config)
+    : m_actor(zactor_new(filter_proxy, (void*)config.c_str()))
 
 {
 }
 
-ptmp::tcs::TCFinder::~TCFinder()
+ptmp::tcs::TPFilter::~TPFilter()
 {
     zsock_signal(zactor_sock(m_actor), 0); // signal quit
     zclock_sleep(1000);
