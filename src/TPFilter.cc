@@ -32,6 +32,12 @@ void filter_proxy(zsock_t* pipe, void* vargs)
 
     zsock_signal(pipe, 0);      // signal ready
 
+    std::string name = method;
+    if (config["name"].is_string()) {
+        name = config["name"];
+    }
+    ptmp::internals::set_thread_name(name);
+
     while (!zsys_interrupted) {
 
         void* which = zpoller_wait(pipe_poller, -1);
