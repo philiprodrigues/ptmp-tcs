@@ -2,6 +2,16 @@
 #include "pdt/ModuleTrigger.h"
 
 /* 
+From David:
+
+It holds an APA number where I've set it such that 0 is the Upstream
+Apa instrumented with Felix, that 1 is the midstream and so on. It can
+be calculated from the channel so either we don't change the detid and
+calculate it later, or we add a little functionality to calculate it
+using the channel of any hit and set it when creating the output TPSet
+that represents the TC.
+
+
 From Phil:
 
  detid set inside FELIX_BR:
@@ -35,7 +45,8 @@ eventually).
 static
 int detid_to_offline_apa_number(int detid)
 {
-    const std::vector<int> i2o_apa_map = {-1, 4, 2, 0, 5, 1, 3};
+    //                installation APA number  1   2   3   4   5   6
+    const std::vector<int> i2o_apa_map = {-1, -1, -1, -1,  2,  0,  1};
     const size_t inst_apa = detid & 0x000000FF;
     if (inst_apa < 0 or inst_apa > 6) { return -1; }
     return i2o_apa_map[inst_apa];
