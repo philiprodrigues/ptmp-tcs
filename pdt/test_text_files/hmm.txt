@@ -1,0 +1,832 @@
+Run: 0 Event: 324
+18 but not 15
+--
+Run: 0 Event: 362
+18 but not 15
+--
+Run: 1 Event: 253
+18 but not 15
+--
+Run: 1 Event: 332
+18 but not 15
+--
+Run: 1 Event: 389
+18 but not 15
+--
+Run: 10 Event: 60
+18 but not 15
+--
+Run: 10 Event: 191
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 11 Event: 379
+18 but not 15
+--
+Run: 12 Event: 185
+18 but not 15
+--
+Run: 12 Event: 358
+18 but not 15
+--
+Run: 13 Event: 60
+18 but not 15
+--
+Run: 13 Event: 183
+18 but not 15
+--
+Run: 13 Event: 315
+18 but not 15
+--
+Run: 14 Event: 115
+18 but not 15
+--
+Run: 14 Event: 141
+18 but not 15
+--
+Run: 15 Event: 4
+18 but not 15
+--
+Run: 16 Event: 121
+18 but not 15
+--
+Run: 16 Event: 132
+18 but not 15
+--
+Run: 16 Event: 150
+18 but not 15
+--
+Run: 17 Event: 88
+18 but not 15
+--
+Run: 18 Event: 124
+18 but not 15
+--
+Run: 18 Event: 311
+18 but not 15
+--
+Run: 19 Event: 70
+18 but not 15
+--
+Run: 19 Event: 127
+18 but not 15
+--
+Run: 19 Event: 392
+18 but not 15
+--
+Run: 2 Event: 138
+18 but not 15
+--
+Run: 20 Event: 158
+18 but not 15
+--
+Run: 20 Event: 190
+18 but not 15
+--
+Run: 20 Event: 192
+18 but not 15
+--
+Run: 21 Event: 371
+18 but not 15
+--
+Run: 22 Event: 180
+18 but not 15
+--
+Run: 22 Event: 363
+18 but not 15
+--
+Run: 23 Event: 25
+18 but not 15
+--
+Run: 23 Event: 165
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 24 Event: 168
+18 but not 15
+--
+Run: 24 Event: 207
+18 but not 15
+--
+Run: 25 Event: 120
+18 but not 15
+--
+Run: 26 Event: 42
+18 but not 15
+--
+Run: 26 Event: 173
+18 but not 15
+--
+Run: 26 Event: 218
+18 but not 15
+--
+Run: 27 Event: 39
+18 but not 15
+--
+Run: 27 Event: 396
+18 but not 15
+--
+Run: 28 Event: 276
+18 but not 15
+--
+Run: 29 Event: 260
+18 but not 15
+--
+Run: 29 Event: 275
+18 but not 15
+--
+Run: 29 Event: 357
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 3 Event: 68
+18 but not 15
+--
+Run: 3 Event: 315
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 30 Event: 163
+18 but not 15
+--
+Run: 31 Event: 62
+18 but not 15
+--
+Run: 31 Event: 97
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 31 Event: 366
+18 but not 15
+--
+Run: 32 Event: 377
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 35 Event: 278
+18 but not 15
+--
+Run: 35 Event: 335
+18 but not 15
+--
+Run: 36 Event: 57
+18 but not 15
+--
+Run: 36 Event: 228
+18 but not 15
+--
+Run: 37 Event: 37
+18 but not 15
+--
+Run: 38 Event: 105
+18 but not 15
+--
+Run: 40 Event: 39
+18 but not 15
+--
+Run: 40 Event: 193
+18 but not 15
+--
+Run: 41 Event: 112
+18 but not 15
+--
+Run: 41 Event: 177
+18 but not 15
+--
+Run: 41 Event: 179
+18 but not 15
+--
+Run: 41 Event: 213
+18 but not 15
+--
+Run: 41 Event: 380
+18 but not 15
+--
+Run: 42 Event: 149
+18 but not 15
+--
+Run: 42 Event: 156
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 44 Event: 35
+18 but not 15
+--
+Run: 44 Event: 350
+18 but not 15
+--
+Run: 44 Event: 352
+18 but not 15
+--
+Run: 45 Event: 61
+18 but not 15
+--
+Run: 46 Event: 140
+18 but not 15
+--
+Run: 46 Event: 250
+18 but not 15
+--
+Run: 46 Event: 368
+18 but not 15
+--
+Run: 47 Event: 201
+18 but not 15
+--
+Run: 47 Event: 355
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 48 Event: 323
+18 but not 15
+--
+Run: 49 Event: 129
+18 but not 15
+--
+Run: 50 Event: 168
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 51 Event: 306
+18 but not 15
+--
+Run: 51 Event: 325
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 52 Event: 304
+18 but not 15
+--
+Run: 52 Event: 396
+18 but not 15
+--
+Run: 54 Event: 219
+18 but not 15
+--
+Run: 55 Event: 108
+18 but not 15
+--
+Run: 55 Event: 142
+18 but not 15
+--
+Run: 55 Event: 218
+18 but not 15
+--
+Run: 56 Event: 77
+18 but not 15
+--
+Run: 57 Event: 144
+18 but not 15
+--
+Run: 57 Event: 152
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 57 Event: 335
+18 but not 15
+--
+Run: 58 Event: 394
+18 but not 15
+--
+Run: 59 Event: 146
+18 but not 15
+--
+Run: 59 Event: 220
+18 but not 15
+--
+Run: 60 Event: 78
+18 but not 15
+--
+Run: 60 Event: 343
+18 but not 15
+--
+Run: 61 Event: 353
+18 but not 15
+--
+Run: 62 Event: 118
+18 but not 15
+--
+Run: 62 Event: 363
+18 but not 15
+--
+Run: 62 Event: 396
+18 but not 15
+--
+Run: 63 Event: 125
+18 but not 15
+--
+Run: 63 Event: 139
+18 but not 15
+--
+Run: 65 Event: 348
+18 but not 15
+--
+Run: 66 Event: 32
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 66 Event: 92
+18 but not 15
+--
+Run: 67 Event: 308
+18 but not 15
+--
+Run: 67 Event: 374
+18 but not 15
+--
+Run: 67 Event: 381
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 69 Event: 134
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 7 Event: 187
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 70 Event: 155
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 71 Event: 216
+18 but not 15
+--
+Run: 71 Event: 312
+18 but not 15
+--
+Run: 71 Event: 324
+18 but not 15
+--
+Run: 71 Event: 352
+18 but not 15
+--
+Run: 72 Event: 115
+18 but not 15
+--
+Run: 72 Event: 305
+18 but not 15
+--
+Run: 73 Event: 99
+18 but not 15
+--
+Run: 73 Event: 278
+18 but not 15
+--
+Run: 73 Event: 391
+18 but not 15
+--
+Run: 74 Event: 123
+18 but not 15
+--
+Run: 74 Event: 233
+18 but not 15
+--
+Run: 75 Event: 147
+18 but not 15
+--
+Run: 76 Event: 351
+18 but not 15
+--
+Run: 77 Event: 126
+18 but not 15
+--
+Run: 77 Event: 141
+18 but not 15
+--
+Run: 77 Event: 400
+18 but not 15
+--
+Run: 78 Event: 236
+18 but not 15
+--
+Run: 78 Event: 239
+18 but not 15
+--
+Run: 78 Event: 350
+18 but not 15
+--
+Run: 8 Event: 23
+18 but not 15
+--
+Run: 8 Event: 267
+18 but not 15
+--
+Run: 8 Event: 321
+18 but not 15
+--
+Run: 80 Event: 50
+18 but not 15
+--
+Run: 80 Event: 164
+18 but not 15
+--
+Run: 80 Event: 168
+18 but not 15
+--
+Run: 80 Event: 268
+18 but not 15
+--
+Run: 81 Event: 112
+18 but not 15
+--
+Run: 81 Event: 224
+18 but not 15
+--
+Run: 82 Event: 15
+18 but not 15
+--
+Run: 82 Event: 63
+18 but not 15
+--
+Run: 84 Event: 11
+18 but not 15
+--
+Run: 84 Event: 104
+18 but not 15
+--
+Run: 84 Event: 258
+18 but not 15
+--
+Run: 85 Event: 89
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 85 Event: 304
+18 but not 15
+--
+Run: 87 Event: 106
+18 but not 15
+--
+Run: 87 Event: 108
+18 but not 15
+--
+Run: 87 Event: 400
+18 but not 15
+--
+Run: 88 Event: 139
+18 but not 15
+--
+Run: 9 Event: 13
+18 but not 15
+--
+Run: 9 Event: 262
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 90 Event: 233
+18 but not 15
+--
+Run: 90 Event: 238
+18 but not 15
+--
+Run: 90 Event: 317
+18 but not 15
+--
+Run: 91 Event: 10
+18 but not 15
+--
+Run: 91 Event: 44
+18 but not 15
+--
+Run: 91 Event: 157
+18 but not 15
+--
+Run: 91 Event: 392
+18 but not 15
+--
+Run: 92 Event: 107
+18 but not 15
+--
+Run: 93 Event: 211
+18 but not 15
+--
+Run: 94 Event: 80
+18 but not 15
+--
+Run: 95 Event: 11
+18 but not 15
+--
+Run: 95 Event: 55
+18 but not 15
+--
+Run: 95 Event: 90
+18 but not 15
+--
+Run: 95 Event: 218
+18 but not 15
+--
+Run: 95 Event: 344
+18 but not 15
+--
+Run: 97 Event: 341
+18 but not 15
+--
+Run: 97 Event: 351
+18 but not 15
+--
+Run: 98 Event: 138
+18 but not 15
+--
+Run: 98 Event: 340
+18 but not 15
+--
+Run: 99 Event: 308
+18 but not 15
+--
+Run: 24 Event: 132
+18 but not 15
+--
+Run: 24 Event: 184
+18 but not 15
+--
+Run: 24 Event: 252
+18 but not 15
+--
+Run: 35 Event: 34
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 35 Event: 391
+18 but not 15
+--
+Run: 38 Event: 7
+18 but not 15
+--
+Run: 38 Event: 24
+18 but not 15
+--
+Run: 38 Event: 81
+18 but not 15
+--
+Run: 38 Event: 122
+18 but not 15
+--
+Run: 50 Event: 40
+18 but not 15
+--
+Run: 50 Event: 186
+18 but not 15
+--
+Run: 50 Event: 268
+18 but not 15
+--
+Run: 50 Event: 270
+18 but not 15
+--
+Run: 50 Event: 383
+18 but not 15
+--
+Run: 50 Event: 394
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 22 Event: 390
+18 but not 15
+--
+Run: 22 Event: 437
+18 but not 15
+--
+Run: 37 Event: 64
+18 but not 15
+--
+Run: 37 Event: 267
+18 but not 15
+--
+Run: 37 Event: 448
+18 but not 15
+--
+Run: 37 Event: 492
+18 but not 15
+--
+Run: 87 Event: 14
+18 but not 15
+Run: 87 Event: 15
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 84 Event: 14
+18 but not 15
+--
+Run: 84 Event: 27
+18 but not 15
+--
+Run: 60 Event: 197
+18 but not 15
+--
+Run: 60 Event: 319
+18 but not 15
+--
+Run: 60 Event: 402
+18 but not 15
+--
+Run: 76 Event: 11
+18 but not 15
+--
+Run: 76 Event: 85
+18 but not 15
+--
+Run: 76 Event: 97
+18 but not 15
+--
+Run: 76 Event: 136
+18 but not 15
+--
+Run: 76 Event: 275
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 76 Event: 303
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 30 Event: 261
+18 but not 15
+--
+Run: 98 Event: 403
+18 but not 15
+--
+Run: 98 Event: 488
+18 but not 15
+--
+Run: 36 Event: 484
+18 but not 15
+--
+Run: 82 Event: 25
+18 but not 15
+--
+Run: 82 Event: 327
+18 but not 15
+--
+Run: 82 Event: 443
+18 but not 15
+--
+Run: 82 Event: 459
+18 but not 15
+--
+Run: 57 Event: 96
+18 but not 15
+--
+Run: 57 Event: 433
+18 but not 15
+--
+Run: 10 Event: 119
+18 but not 15
+--
+Run: 10 Event: 137
+18 but not 15
+--
+Run: 10 Event: 474
+18 but not 15
+--
+Run: 16 Event: 8
+18 but not 15
+--
+Run: 16 Event: 355
+18 but not 15
+--
+Run: 96 Event: 363
+18 but not 15
+--
+Run: 96 Event: 499
+18 but not 15
+--
+Run: 34 Event: 142
+18 but not 15
+--
+Run: 42 Event: 43
+18 but not 15
+--
+Run: 42 Event: 51
+18 but not 15
+--
+Run: 42 Event: 103
+18 but not 15
+--
+Run: 42 Event: 242
+18 but not 15
+--
+Run: 42 Event: 259
+18 but not 15
+--
+Run: 42 Event: 282
+18 but not 15
+--
+Run: 42 Event: 311
+18 but not 15
+--
+Run: 42 Event: 489
+18 but not 15
+--
+Run: 14 Event: 233
+18 but not 15
+--
+MORE 18 THAN 15
+18 but not 15
+--
+Run: 66 Event: 199
+18 but not 15
+--
+Run: 66 Event: 374
+18 but not 15
+--
+Run: 66 Event: 458
+18 but not 15
+--
+Run: 66 Event: 489
+18 but not 15
+--
+Run: 99 Event: 155
+18 but not 15
+--
+Run: 99 Event: 426
+18 but not 15
+--
+Run: 94 Event: 448
+18 but not 15
+--
+Run: 2 Event: 14
+18 but not 15
+--
+Run: 2 Event: 40
+18 but not 15
+--
+Run: 2 Event: 235
+18 but not 15
+--
+Run: 2 Event: 279
+18 but not 15
+--
+Run: 2 Event: 281
+18 but not 15
+--
+Run: 2 Event: 442
+18 but not 15
+--
+Run: 2 Event: 450
+18 but not 15
+--
+Run: 2 Event: 483
+18 but not 15
+--
+Run: 75 Event: 109
+18 but not 15
+--
+Run: 75 Event: 200
+18 but not 15
+--
+Run: 75 Event: 330
+18 but not 15
