@@ -1,0 +1,50 @@
+#+title: ptmp-tcs replay test
+
+The [[https://github.com/brettviren/ptmp/blob/master/test/play-pdsp-file.sh][this script]] in the ~ptmp~ repo helps generate JSON for ~ptmper~ to run
+a complex suite of jobs that will replay data from 2 APAs in the form
+of 10 link files each.  Run it like:
+
+#+BEGIN_EXAMPLE
+  $ ./test/play-pdsp-file.sh /data/fast/bviren/ptmp-dumps/2019-07-19
+  ...
+  Config generated.  Now, maybe:
+  cd /tmp/test-pdsp-Zys3O
+#+END_EXAMPLE
+
+In that temp directory you will find: 
+
+#+BEGIN_EXAMPLE
+$ ls /tmp/test-pdsp-Zys3O
+extvar-tc-apa5.json  fileplay-apa6.json  sink-tcs.json  tcs-graph.json  tds-graph.pdf
+extvar-tc-apa6.json  Procfile.tcs        sink-tds.json  tcs-graph.pdf   tps-graph.dot
+extvar-td.json       Procfile.tds        sink-tps.json  tds-graph.dot   tps-graph.json
+fileplay-apa5.json   Procfile.tps        tcs-graph.dot  tds-graph.json  tps-graph.pdf
+#+END_EXAMPLE
+
+Each ~Procfile.*~ is a foreman file which can execute the entire suite like:
+
+#+BEGIN_EXAMPLE
+$ cd /tmp/test-pdsp-Zys3O
+$ cat Procfile.tds
+filesink: ptmper sink-tds.json
+tdfinder: ptmper extvar-td.json
+tcfinder: ptmper extvar-tc-apa5.json
+tcfinder: ptmper extvar-tc-apa6.json
+fileplay: ptmper fileplay-apa5.json
+fileplay: ptmper fileplay-apa6.json
+$ shoreman Procfile.tds
+#+END_EXAMPLE
+
+Here [[https://github.com/brettviren/shoreman][shoreman]] the Bash implementation of Foreman is used.  It just
+runs each command in a fork.
+
+If all goes well then this file should fill:
+
+#+BEGIN_EXAMPLE
+-rw-rw-r-- 1 bviren bviren       0 Jul 30 16:32 test-tds.dump
+#+END_EXAMPLE
+
+If it doesn't fill and no errors are shown by ~shoreman~ then either the
+~TriggerCandidate()~ or ~ModuleTrigger()~ functions from [[https://github.com/dlast44/ProtoDuneTrigger][PDT]] are not
+activating.
+
