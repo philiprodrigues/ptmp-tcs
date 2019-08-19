@@ -1,6 +1,15 @@
-#include "pdt/ModuleTrigger.h"
 
 #include "pdt_engines.h"
+#include "ptmp/data.h"
+#include "ptmp/filter.h"
+#include "json.hpp"
+
+#include <czmq.h>
+
+#include <vector>
+
+// #include "pdt/ModuleTrigger.h"
+int ModuleTrigger( std::vector<std::vector<int> > candidates);
 
 using json = nlohmann::json;
 

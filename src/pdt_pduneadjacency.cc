@@ -1,17 +1,27 @@
-// fixme: currently TriggerCandidate.h doesn't include
-// AdjacencyAlgorithms.h but requires it for defining TP
-#include "pdt/AdjacencyAlgorithms.h"
-#include "pdt/TriggerCandidate.h"
-
 #include "pdt_engines.h"
+#include "ptmp/data.h"
+#include "ptmp/filter.h"
+#include "json.hpp"
 
+#include <czmq.h>
 #include <limits>
+
+// #include "pdt/AdjacencyAlgorithms.h"
+struct TP{
+    unsigned int channel;
+    unsigned int tstart;
+    unsigned int tspan;
+    unsigned int adcsum;
+    unsigned int adcpeak;
+    unsigned int flags;
+};
+// #include "pdt/TriggerCandidate.h"
+std::vector<int> TriggerCandidate(std::vector<TP>, int clustering=0);
 
 using json = nlohmann::json;
 
 // Fixme: TrigPrim holds 50MHz clocks, PDT assumes 2MHz
 const int hwtick_per_internal = 25;
-
 
 static
 TP convert(const ptmp::data::TrigPrim& tp)
