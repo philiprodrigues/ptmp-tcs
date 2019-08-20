@@ -278,7 +278,7 @@ fi
 set -x
 $WAF configure \
       $extra_args \
-      --with-libzmq-lib=$ZEROMQ_LIB --with-libzmq-include=$ZEROMQ_INC \
+      --with-libzmq-lib=$ZMQ_LIB --with-libzmq-include=$ZMQ_INC \
       --with-libczmq-lib=$CZMQ_LIB --with-libczmq-include=$CZMQ_INC \
       --with-protobuf=$PROTOBUF_FQ_DIR \
       --prefix=${!PRODNAME_UC_FQ_DIR} || usage "configuration of source failed"
