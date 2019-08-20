@@ -1,7 +1,6 @@
 
 #include "ptmp/api.h"
 #include "ptmp/cmdline.h"
-#include "ptmp-tcs/api.h"
 
 #include <vector>
 #include <string>
@@ -14,10 +13,14 @@ using namespace ptmp::cmdline;
 int main(int argc, char* argv[])
 {
     zsys_init();
-    CLI::App app{"Run TCFinder"};
+    CLI::App app{"Run TC finder"};
 
-    std::string method = "pdune-adjacency";
-    app.add_option("-m,--method", method, "The name of the TCFinder method");
+    int detid = 0x12345678;
+    app.add_option("-d,--detid", detid, "numerical detector ID for the TC output");
+
+
+    std::string engine = "pdune_adjacency_tc";
+    app.add_option("-e,--engine", engine, "The name of the TC finder filter engine");
 
     int countdown = -1;         // forever
     app.add_option("-c,--count", countdown,
@@ -36,14 +39,15 @@ int main(int argc, char* argv[])
     json jcfg;
     jcfg["input"] = to_json(iopt);
     jcfg["output"] = to_json(oopt);
-    jcfg["method"] = method;
+    jcfg["engine"] = engine;
+    jcfg["detid"] = detid;
     
     // std::cerr << "Using config: " << jcfg << std::endl;
 
     std::string cfgstr = jcfg.dump();
 
     {
-        ptmp::tcs::TCFinder proxy(cfgstr);
+        ptmp::TPFilter proxy(cfgstr);
 
         int snooze = 1000;
         while (countdown != 0) {

@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/dlast44/ProtoDuneTrigger.git
+	branch = master
+	commit = 97a9841e68a6a2ce3f25db787928ebd66439817d
+	parent = 5ea55afb5f72e90bb58ba536e1cf453705c4d1be
+	method = merge
+	cmdver = 0.4.0

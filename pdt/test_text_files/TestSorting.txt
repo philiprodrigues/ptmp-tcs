@@ -1,0 +1,171 @@
+ARGUMENT INITIALIZATION
+PASSED ARGUMENT INITIALIZATION.
+/dune/app/users/drivera/hsums/horizontal_100GeV_PDSP_muons/all_100GeV_muons_protoDUNE_skim_output_54k_evts.root
+Run: 0 Event: 1
+
+First channel tick: 3499
+Last channel tick: 3447
+First channel tick: 3599
+Last channel tick: 3500
+First channel tick: 3698
+Last channel tick: 3600
+First channel tick: 3753
+Last channel tick: 3700
+First channel tick: 3799
+Last channel tick: 3755
+First channel tick: 3899
+Last channel tick: 3801
+First channel tick: 3999
+Last channel tick: 3915
+
+
+Run: 0 Event: 2
+
+First channel tick: 3899
+Last channel tick: 3800
+First channel tick: 3987
+Last channel tick: 3900
+First channel tick: 4099
+Last channel tick: 4000
+First channel tick: 4199
+Last channel tick: 4101
+First channel tick: 4224
+Last channel tick: 4202
+First channel tick: 4266
+Last channel tick: 4261
+First channel tick: 4393
+Last channel tick: 4315
+First channel tick: 4498
+Last channel tick: 4455
+First channel tick: 4593
+Last channel tick: 4500
+First channel tick: 4690
+Last channel tick: 4615
+
+
+Run: 0 Event: 3
+
+First channel tick: 2688
+Last channel tick: 2698
+First channel tick: 2700
+Last channel tick: 2730
+
+
+Run: 0 Event: 4
+
+First channel tick: 3399
+Last channel tick: 3306
+First channel tick: 3499
+Last channel tick: 3401
+First channel tick: 3544
+Last channel tick: 3501
+First channel tick: 3599
+Last channel tick: 3546
+First channel tick: 3699
+Last channel tick: 3600
+First channel tick: 3728
+Last channel tick: 3700
+
+
+Run: 0 Event: 5
+
+First channel tick: 1398
+Last channel tick: 1328
+First channel tick: 1499
+Last channel tick: 1400
+First channel tick: 1598
+Last channel tick: 1501
+First channel tick: 1698
+Last channel tick: 1600
+First channel tick: 1799
+Last channel tick: 1700
+First channel tick: 1899
+Last channel tick: 1812
+First channel tick: 1988
+Last channel tick: 1908
+First channel tick: 2099
+Last channel tick: 2000
+First channel tick: 2199
+Last channel tick: 2100
+First channel tick: 2251
+Last channel tick: 2200
+
+
+Run: 0 Event: 6
+
+First channel tick: 1904
+Last channel tick: 1985
+First channel tick: 2000
+Last channel tick: 2058
+First channel tick: 2100
+Last channel tick: 2140
+
+
+Run: 0 Event: 7
+
+First channel tick: 2200
+Last channel tick: 2299
+First channel tick: 2301
+Last channel tick: 2366
+
+
+Run: 0 Event: 8
+
+First channel tick: 2670
+Last channel tick: 2610
+First channel tick: 2688
+Last channel tick: 2689
+
+
+Run: 0 Event: 9
+
+First channel tick: 999
+Last channel tick: 900
+First channel tick: 1099
+Last channel tick: 1000
+First channel tick: 1199
+Last channel tick: 1135
+First channel tick: 1287
+Last channel tick: 1200
+First channel tick: 1399
+Last channel tick: 1363
+First channel tick: 1437
+Last channel tick: 1400
+First channel tick: 1598
+Last channel tick: 1501
+First channel tick: 1698
+Last channel tick: 1600
+First channel tick: 1799
+Last channel tick: 1700
+First channel tick: 1898
+Last channel tick: 1801
+First channel tick: 1998
+Last channel tick: 1900
+First channel tick: 2087
+Last channel tick: 2000
+
+
+Run: 0 Event: 10
+
+First channel tick: 3399
+Last channel tick: 3306
+First channel tick: 3499
+Last channel tick: 3400
+First channel tick: 3550
+Last channel tick: 3500
+First channel tick: 3572
+Last channel tick: 3551
+First channel tick: 3699
+Last channel tick: 3600
+First channel tick: 3755
+Last channel tick: 3700
+
+
+ADC threshold of: 15 had: 10 events that weren't empty.
+ADC thredhold of: 15 had: 0 triggers issued.
+Corresponding efficiency: 0
+ADC threshold of: 18 had: 10 events that weren't empty.
+ADC thredhold of: 18 had: 0 triggers issued.
+Corresponding efficiency: 0
+CLOSING
+DONE

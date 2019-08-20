@@ -1,6 +1,3 @@
 [submodule "tcs"]
 	path = pdt
 	url = https://github.com/dlast44/ProtoDuneTrigger.git
-[submodule "waftools"]
-	path = waftools
-	url = https://github.com/brettviren/waftools.git

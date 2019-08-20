@@ -3,7 +3,7 @@
 import sys
 from waflib.Utils import to_list
 
-sys.path.append('waftools')
+sys.path.append('tools')
 
 
 pkg_deps = ['libzmq','libczmq','protobuf','ptmp']
@@ -36,6 +36,10 @@ def build(bld):
         if p: rpath += p
 
     src = bld.path.ant_glob("src/*.cc")
+    pdt = bld.path.find_node("pdt")
+    src += [pdt.find_node("AdjacencyAlgorithms.cpp"),
+            pdt.find_node("TriggerCandidate.cpp"),
+            pdt.find_node("ModuleTrigger.cpp")]
 
     bld.shlib(features='c cxx',
               includes='inc include .',

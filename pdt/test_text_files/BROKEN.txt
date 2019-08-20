@@ -1,0 +1,71 @@
+THESE ARE THE Runs and Events from the 10500 sample which have an unequal number of candidates for the two thresholds, and a classification for why:
+
+APA NUMBERING WITHIN IS FOR THE FELIX INSTRUMENTED AND DOES NOT MATCH THE LArSodt (LAR 1 = 0, LAR 3 = 1, LAR 5 = 2)
+NEED CHECK THE SORTING OF CANDIDATES...
+
+Run: 24 Event: 22
+Candidates for fh15: 3
+Candidates for fh18: 4
+Reason for discrepancy: Window 24 in APA 0 for fh15 had adjacency 37, whereas for fh18 it had adjacency 67
+OTHER NOTES: None
+
+Run: 24 Event: 58
+Candidates for fh15: 7
+Candidates for fh18: 6
+Reason for discrepancy: Window 17 in APA 1 doesn't show up anywhere for fh18 but had adjacency 244 for fh15...
+OTHER NOTES: This will fail the module trigger for quite an odd reason that has to do with knockout or something it would seem... may be fixed by gaps corrections...
+
+Run: 24 Event: 109
+Candidates for fh15: 2
+Candidates for fh18: 1
+Reason for discrepancy: Window 28 in APA 1 doesn't show up anywhere for fh18 but had adjacency 293 for fh15...
+OTHER NOTES: Another Lost Window... That's the real concern...
+
+Run: 24 Event: 177
+Candidates for fh15: 13
+Candidates for fh18: 14
+Reason for discrepancy: Window 15 in APA 0 for fh15 had adjacency 46, whereas for fh18 it had adjacency 60
+OTHER NOTES: None
+
+Run: 35 Event: 183
+Candidates for fh15: 3
+Candidates for fh18: 4
+Reason for discrepancy: Window 34 in APA 0 for fh15 had adjacency 34, whereas for fh18 it had adjacency 61
+OTHER NOTES: None
+
+Run: 35 Event: 400
+Candidates for fh15: 3
+Candidates for fh18: 4
+Reason for discrepancy: Window 26 in APA 1 for fh15 had adjacency 28, whereas for fh18 it had adjacency 51
+OTHER NOTES: None
+
+Run: 35 Event: 445
+Candidates for fh15: 4
+Candidates for fh18: 3
+Reason for discrepancy: Window 20 in APA 1 doesn't show up anywhere for fh18 but had adjacency 230 for fh15...
+OTHER NOTES: This will fail the module trigger for quite an odd reason that has to do with knockout or something it would seem... may be fixed by gaps corrections...
+
+Run: 35 Event: 462
+Candidates for fh15: 2
+Candidates for fh18: 3
+Reason for discrepancy: Window 28 in APA 1 doesn't show up anywhere in fh15 but had adjacency 407 in fh18
+OTHER NOTES: Another lost window...
+
+Run: 50 Event: 3
+Candidates for fh15: 9
+Candidates for fh18: 10
+Reason for discrepancy: Window 41 in APA 1 had adjacency 36 in fh15 but had adjacency 51 in fh18
+OTHER NOTES: None
+
+Run: 50 Event: 61
+Candidates for fh15: 3
+Candidates for fh18: 4
+Reason for discrepancy: Window 32 in APA 0 had adjacency 34 in fh15 but had adjacency 65 in fh18
+OTHER NOTES: None
+
+Run: 50 Event: 120
+Candidates for fh15: 1
+Candidates for fh18: 2
+Reason for discrepancy: Window 28 in APA 1 doesn't show up anywhere for fh18 but had adjacency 480 for fh18
+OTHER NOTES: Another lost window...
+

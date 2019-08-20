@@ -115,7 +115,7 @@ static
 zmsg_t* fix_msg(zmsg_t*& msg)
 {
     ptmp::data::TPSet tps;
-    ptmp::internals::recv(msg, tps); // throws
+    ptmp::internals::recv(&msg, tps); // throws
     
     for (auto& tp : *tps.mutable_tps()) {
         tp.set_tspan(tp.tspan() * 25);
@@ -132,7 +132,7 @@ zmsg_t* fix_msg(zmsg_t*& msg)
     zframe_t* pay = zframe_new(NULL, siz);
     tps.SerializeToArray(zframe_data(pay), zframe_size(pay));
     rc = zmsg_append(newmsg, &pay);
-    zmsg_destroy(&msg);
+
     return newmsg;
 }
 

@@ -1,0 +1,33 @@
+ARGUMENT INITIALIZATION
+PASSED ARGUMENT INITIALIZATION.
+/dune/app/users/drivera/hsums/horizontal_100GeV_PDSP_muons/all_100GeV_muons_protoDUNE_skim_output_54k_evts.root
+Run: 0 Event: 1
+
+Run: 0 Event: 2
+
+Run: 0 Event: 3
+
+Run: 0 Event: 4
+
+Run: 0 Event: 5
+
+Run: 0 Event: 6
+
+Run: 0 Event: 7
+
+Run: 0 Event: 8
+
+Run: 0 Event: 9
+
+Run: 0 Event: 10
+
+ADC threshold of: 15 had: 10 events that weren't empty.
+ADC thredhold of: 15 had: 0 triggers issued.
+Corresponding efficiency: 0
+
+ADC threshold of: 18 had: 10 events that weren't empty.
+ADC thredhold of: 18 had: 0 triggers issued.
+Corresponding efficiency: 0
+
+CLOSING
+DONE

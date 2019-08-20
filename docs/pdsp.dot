@@ -1,0 +1,36 @@
+digraph pdsp {
+        rankdir=LR
+        node[shape=record]
+        subgraph cluster_felixbr {
+                label="FELIX BR (1 link, 10/APA)"
+                fx_hf[label="{<o>PUB|hit finder\nalgorithm}"]
+                fx_prep[label="{<i>SUB|data prep\ncompression}"]
+        }
+        subgraph cluster_tcfinder {
+                label="Trigger Candidate Finder (1/APA, 6/PDSP)"
+                tp_win[label="{<i>SUB|windowing\n1/link, 10/APA|<o>PUSH}"]
+                tp_zip[label="{<i>PULL|zipper|<o>PUSH}"]
+                tp_find[label="{<i>PULL|TC finder|<o>PUB}"]
+                tp_win:o->tp_zip:i[label="(10->1) inproc://"]
+                tp_zip:o->tp_find:i[label="(1->1) inproc://"]
+        }
+        subgraph cluster_mltproc {
+                label="Module Level Trigger (1/PDSP)"
+                mt_zip[label="{<i>SUB|zipper|<o>PUSH}"]
+                mt_td[label="{<i>PULL|trigger decision|<o>PUB}"]
+                mt_zip:o->mt_td:i[label="(1->1) inproc://"]
+        }
+        subgraph cluster_artdaq {
+                label="artdaq back-end"
+                ad_td[label="{<i>SUB|TD BR}"]
+                ad_eb[label="Event Builder"]
+                ad_td->ad_eb
+
+        }
+        fx_hf:o->tp_win:i[label="(1->1) tpc://"]
+        tp_find:o->mt_zip:i[label="(6->1) tpc://"]
+        mt_td:o->ad_td:i[label="(1->1) tpc://"]
+        mt_td:o->fx_prep:i[label="(1->60) tpc://"]
+        ad_eb->fx_prep[dir=both]
+        
+}
