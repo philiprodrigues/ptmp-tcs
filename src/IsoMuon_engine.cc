@@ -9,8 +9,8 @@ IsoMuon_engine::IsoMuon_engine(const std::string& config)
 {
     auto jcfg = nlohmann::json::parse(config);
     try{
-        if (jcfg["algconfig"]["hits_per_link_threshold"].is_number()) {
-            hits_per_link_threshold_ = jcfg["algconfig"]["hits_per_link_threshold"];
+        if (jcfg["engine_config"]["hits_per_link_threshold"].is_number()) {
+            hits_per_link_threshold_ = jcfg["engine_config"]["hits_per_link_threshold"];
         }
     }
     catch(nlohmann::detail::exception& e){

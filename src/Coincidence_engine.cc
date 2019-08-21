@@ -9,8 +9,8 @@ Coincidence_engine::Coincidence_engine(const std::string& config)
     auto jcfg = nlohmann::json::parse(config);
     nway=2;
     try{
-        if (jcfg["algconfig"]["nway"].is_number()) {
-            nway = jcfg["algconfig"]["nway"];
+        if (jcfg["engine_config"]["nway"].is_number()) {
+            nway = jcfg["engine_config"]["nway"];
         }
     }
     catch(nlohmann::detail::exception& e){
