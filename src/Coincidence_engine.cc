@@ -53,6 +53,14 @@ void Coincidence_engine::operator()(const ptmp::data::TPSet& in_set,
         trigger_tpset.set_created(ptmp::data::now());
         trigger_tpset.set_tstart(in_set.tstart());
 
+        // ptmp 0.5.0 and later drop empty TPSets, so we need to
+        // put at least one TrigPrim in the output TPSet. TODO:
+        // the output TPSet should contain the TrigPrims from the
+        // input TPSets it was created from
+        ptmp::data::TrigPrim* newtp = trigger_tpset.add_tps();
+        newtp->set_channel(0);
+        newtp->set_tstart(last_tstart);
+
         output_tpsets.push_back(trigger_tpset);
         ++n_triggers;
     }
