@@ -8,10 +8,23 @@
 
 #include <vector>
 
-// #include "pdt/ModuleTrigger.h"
-int ModuleTrigger( std::vector<std::vector<int> > candidates);
-
 using json = nlohmann::json;
+
+struct TC{
+  uint32_t adjacency;
+  uint32_t adcpeak;
+  uint32_t adcsum;
+  uint32_t tspan;
+  uint32_t first_ch;
+  uint32_t last_ch;
+  uint64_t tstart;
+  uint64_t first_time;
+  uint64_t last_time;
+  int apanum;
+};
+
+// #include "pdt/ModuleTrigger.h"
+int ModuleTrigger(std::vector<TC> candidates);
 
 /* 
 From David:
@@ -65,14 +78,12 @@ int detid_to_offline_apa_number(int detid)
 }
 
 // Fixme: TPSet holds 50MHz clocks, PDT assumes 2MHz
-const int hwtick_per_internal = 25;
+const uint32_t hwtick_per_internal = 25;
 
 class pdt_td_engine : public ptmp::filter::engine_t {
-    // when new TPSet is later than last_tstart, we call ModuleTrigger()
-    typedef std::vector<int> candidate_t;
-    std::vector<candidate_t> candidates;
+    std::vector<TC> candidates;
     ptmp::data::TPSet outbound;
-    ptmp::data::data_time_t twindow{2500}; // 50us at 50MHz, fixme, need to set to match input.
+    ptmp::data::data_time_t twindow{150000}; // 3ms at 50MHz ticks
 public:
     pdt_td_engine(const std::string& /*unused for now*/) {
     }
@@ -106,7 +117,6 @@ public:
         if (candidates.empty()) {   // first in batch
             // warning: This relies on input to be properly synchronous.  
             outbound.set_tstart(fresh.tstart());
-            outbound.set_tstart(twindow);
             outbound.set_detid(fresh.detid());
         }
 
@@ -116,22 +126,23 @@ public:
         // 
         //     0         1       2       3      4      5     6    7   8
         // (adjacency, adcpeak, adcsum, tspan, chan1, chan2, t1, t2, apanum)
-        candidate_t candidate(9, 0);
+        TC candidate;
 
         // Adjacency value is outside the TPSet/TrigPrim model and is
         // special to the PDT TriggerCandidate() algorithm.  We've stashed
         // it in TrigPrim.adcpeak in a final TrigPrim with .flag set to
         // 0xdeadbeaf which is collected above.
-        candidate[0] = special->adcpeak();
+        candidate.tstart = fresh.tstart();
+        candidate.adjacency = special->adcpeak();
         // 1: not used
         // 2: not used
         // 3: not used
-        candidate[4] = fresh.chanbeg();
-        candidate[5] = fresh.chanend();
+        candidate.first_ch = fresh.chanbeg();
+        candidate.last_ch = fresh.chanend();
         // PDT works in 2MHz clock ticks, not 50MHz
-        candidate[6] = special->tstart()/hwtick_per_internal;
-        candidate[7] = (special->tstart() + special->tspan())/hwtick_per_internal;
-        candidate[8] = detid_to_offline_apa_number(fresh.detid());
+        candidate.first_time = special->tstart() / hwtick_per_internal;
+        candidate.last_time = (special->tstart() + special->tspan())/hwtick_per_internal;
+        candidate.apanum = detid_to_offline_apa_number(fresh.detid());
         candidates.push_back(candidate);
 
         outbound.set_chanbeg(std::min(outbound.chanbeg(), fresh.chanbeg()));
@@ -140,37 +151,48 @@ public:
 
     virtual void operator()(const ptmp::data::TPSet& input_tpset,
                             std::vector<ptmp::data::TPSet>& output_tpsets) {
+
+
+        // We need a sliding window so we can stitch TCs across time windows.
+                                                                                   
         const ptmp::data::data_time_t this_tstart = input_tpset.tstart();
         if (candidates.empty()) {
             ingest(input_tpset);
             return;
         }
-        if (this_tstart < outbound.tstart()) {
+        if (this_tstart < candidates.back().tstart) {
             zsys_warning("PDUNEAdjacencyMLT_engine: dropping tardy at %ld by %ld",
                          this_tstart, outbound.tstart()-this_tstart);
             return;
-        }
-        if (this_tstart < outbound.tstart() + twindow) {
-            ingest(input_tpset);
-            return;
-        }
+        } 
 
+        ingest(input_tpset);
+        // Make a simple sliding window, with width = twindow
+        while ((candidates.back().tstart - candidates.front().tstart) > twindow ) {
+          candidates.erase(candidates.begin());
+          // Saves a little time
+          if (candidates.size() < 2) return;
+        }
+         
         // ready to process
+        int trigger = ModuleTrigger(candidates);
 
-        // fixme: does MT() need any sorting of its input candidates?
+        // Print some messages for ml debugging
+        if(trigger) {
+          for(auto cand : candidates) {
+            zsys_info("Adj: %ld | APA: %ld  | FT: %ld | FCh: %ld |  LT: %ld |  LCh: %ld", cand.adjacency, cand.apanum, cand.first_time, cand.first_ch, cand.last_time, cand.last_ch);
+          }
+       }
 
-        int ok = ModuleTrigger(candidates);
-
-        if (ok) {                   // got one
+        if (trigger) {                   // got one
+            outbound.set_tstart( candidates.front().tstart );
             outbound.set_count(1+outbound.count());
             outbound.set_created(ptmp::data::now());
+            zsys_info("Trigger TS %ld", outbound.tstart());
             output_tpsets.push_back(outbound);
+            clear();
         }
 
-        clear();
-
-        // don't forget the input that prompted processing
-        ingest(input_tpset);
     }
 
     void clear() {

@@ -35,7 +35,7 @@ bool CompareTPs(TP TP1, TP TP2){
   else return false;
 }
 
-bool CompareTPSets(vector<TP> TPs1, vector<TP> TPs2){
+bool CompareTPSets(std::vector<TP> TPs1, std::vector<TP> TPs2){
   if (TPs1.size() != TPs2.size()) return false;
   for (unsigned int i=0; i < TPs1.size(); ++i){
     if (!CompareTPs(TPs1.at(i),TPs2.at(i))) return false;
@@ -45,8 +45,8 @@ bool CompareTPSets(vector<TP> TPs1, vector<TP> TPs2){
 
 //Type Conversion from current LArSoft Hit trees from skims to new struct object, TP. No sorting done here.
 
-vector<TP> HitsToTPs(vector<unsigned int> channels, vector<unsigned int> times, vector<unsigned int> tots, vector<unsigned int> adcs){
-  vector<TP> TPs;
+std::vector<TP> HitsToTPs(std::vector<unsigned int> channels, std::vector<unsigned int> times, std::vector<unsigned int> tots, std::vector<unsigned int> adcs){
+  std::vector<TP> TPs;
   for (unsigned int i=0; i < channels.size(); ++i){
     //Filling of zero is just so that none of these have any errors, the handling of any TP with an error will be handled elsewhere.
     TP TPtmp={channels.at(i),times.at(i),tots.at(i),adcs.at(i),adcs.at(i),0};
@@ -56,8 +56,8 @@ vector<TP> HitsToTPs(vector<unsigned int> channels, vector<unsigned int> times, 
 }
 
 //Effectively removes any TPs which have error flags... Will investigate when running live... NEED TO TEST AT SOME POINT
-vector<TP> CleanTPs(vector<TP> TPs){
-  vector<TP> new_TPs;
+std::vector<TP> CleanTPs(std::vector<TP> TPs){
+  std::vector<TP> new_TPs;
   for (unsigned int i=0; i < TPs.size(); ++i){
     if (TPs.at(i).flags ==0){
       new_TPs.push_back(TPs.at(i));
@@ -74,8 +74,8 @@ ResortHitsByWindow comments:
 Sorting a given vector of primitive characteristics (charge, time, channel) for any quantity of time into independent vectors of hits into the desired windows.
 ***/
 
-vector<vector<unsigned int>> ResortHitsByWindow(vector<unsigned int> time_vec, vector<unsigned int> sorting_vec){
-  vector<vector<unsigned int>> new_hits(nticks/windows+1);
+std::vector<std::vector<unsigned int>> ResortHitsByWindow(std::vector<unsigned int> time_vec, std::vector<unsigned int> sorting_vec){
+  std::vector<std::vector<unsigned int>> new_hits(nticks/windows+1);
   for (unsigned int i=0; i < time_vec.size(); ++i){
     new_hits.at((int)time_vec.at(i)/windows).push_back(sorting_vec.at(i));
   }
@@ -88,8 +88,8 @@ ResortHitsByAPA comments:
 Same as by window but into groupings by APA if the intial delivery of primitives is in groupings larger than one APA.
  ***/
 
-vector<vector<unsigned int>> ResortHitsByAPA(vector<unsigned int> channel_vec, vector<unsigned int> sorting_vec){
-  vector<vector<unsigned int>> new_hits(nAPAs);
+std::vector<std::vector<unsigned int>> ResortHitsByAPA(std::vector<unsigned int> channel_vec, std::vector<unsigned int> sorting_vec){
+  std::vector<std::vector<unsigned int>> new_hits(nAPAs);
   for (unsigned int i=0; i < channel_vec.size(); ++i){
     new_hits.at((int)channel_vec.at(i)/nChannels).push_back(sorting_vec.at(i));
   }
@@ -103,9 +103,9 @@ ResortTPsByWindow comments:
 Sorting a given vector of primitive characteristics (charge, time, channel) for any quantity of time into independent vectors of TPs into the desired windows. It also has applicability to sort non-channel sorted sets into channel-sorted sets. Will not return sub-ordering in time unless the input vector is already time-ordered.
 ***/
 
-vector<vector<TP>> ResortTPsByWindow(vector<TP> TPs, int channel_sort){
+std::vector<std::vector<TP>> ResortTPsByWindow(std::vector<TP> TPs, int channel_sort){
   int index = -1;
-  vector<vector<TP>> new_TPs(nticks/windows+1);
+  std::vector<std::vector<TP>> new_TPs(nticks/windows+1);
   if (channel_sort !=0){
     for (unsigned int i=0; i < TPs.size(); ++i){
       index = (int)TPs.at(i).tstart/windows;
@@ -140,8 +140,8 @@ ResortTPsByAPA comments:
 Same as by window but into groupings by APA if the intial delivery of primitives is in groupings larger than one APA.
  ***/
 
-vector<vector<TP>> ResortTPsByAPA(vector<TP> TPs){
-  vector<vector<TP>> new_TPs(nAPAs);
+std::vector<std::vector<TP>> ResortTPsByAPA(std::vector<TP> TPs){
+  std::vector<std::vector<TP>> new_TPs(nAPAs);
   for (unsigned int i=0; i < TPs.size(); ++i){
     new_TPs.at((int)TPs.at(i).channel/nChannels).push_back(TPs.at(i));
   }
@@ -155,13 +155,13 @@ This is the same idea as the above sorting functions.
 It sorts by TPC such that you can ask for how much charge is on one side of the APA without having to ask which TPC it's in later.
 Input sorting list should be a list that has already been sorted into APAs.
  ***/
-vector<vector<unsigned int>> ResortHitsByTPC(vector<unsigned int> channel_vec, vector<unsigned int> sorting_vec, unsigned int APA){
-  vector<vector<unsigned int>> new_hits(2);
+std::vector<std::vector<unsigned int>> ResortHitsByTPC(std::vector<unsigned int> channel_vec, std::vector<unsigned int> sorting_vec, unsigned int APA){
+  std::vector<std::vector<unsigned int>> new_hits(2);
   unsigned int APA_channel;
   for (unsigned int i=0; i < channel_vec.size(); ++i){
     APA_channel = channel_vec.at(i) - (nChannels*APA);
     if (APA_channel < 1600){
-      cout << "SOMETHING IS SCREWED UP IN TPC SORTING. INDUCTION WIRE?" << endl;
+      std::cout << "SOMETHING IS SCREWED UP IN TPC SORTING. INDUCTION WIRE?" << std::endl;
       new_hits.clear();
       return new_hits;
     }
@@ -172,7 +172,7 @@ vector<vector<unsigned int>> ResortHitsByTPC(vector<unsigned int> channel_vec, v
       new_hits.at(1).push_back(sorting_vec.at(i));
     }
     else {
-      cout << "SOMETHING IS SCREWED UP IN TPC SORTING. WRONG APA?" << endl;
+      std::cout << "SOMETHING IS SCREWED UP IN TPC SORTING. WRONG APA?" << std::endl;
       new_hits.clear();
       return new_hits;
     }
@@ -185,8 +185,8 @@ SortByTick comments:
 
 The sorting necessary to be able to perform the Clustering algorithm as currently written. Sorts into 5us sub-windows.
  ***/
-vector<vector<unsigned int>> SortByTick(vector<unsigned int> time_vec, vector<unsigned int> sorting_vec, unsigned int win){
-  vector<vector<unsigned int>> new_hits(windows/prim_ticks); //never set prim_ticks such that windows is not a multiple of prim_ticks
+std::vector<std::vector<unsigned int>> SortByTick(std::vector<unsigned int> time_vec, std::vector<unsigned int> sorting_vec, unsigned int win){
+  std::vector<std::vector<unsigned int>> new_hits(windows/prim_ticks); //never set prim_ticks such that windows is not a multiple of prim_ticks
   for (unsigned int i=0; i < time_vec.size(); ++i){
     new_hits.at(((int)time_vec.at(i)-windows*win)/prim_ticks).push_back(sorting_vec.at(i));
   }
@@ -200,7 +200,7 @@ AdjacentSameWindowCountingPrim:
 
 Clustering code for the method called "Adjacency". This method assumes that the primitives are ordered in increasing channel order.
  ***/
-int AdjacentSameWindowCountingPrim(vector<unsigned int> channels){
+int AdjacentSameWindowCountingPrim(std::vector<unsigned int> channels){
   int max = 0;
   int adj = 1;
   unsigned int channel = 0;
@@ -243,8 +243,8 @@ This performs the above described "Adjacency" method (AdjacentSameWindowCounting
 3) Maximum single-primitive SummedADC
 4) Sum total of TOTs in window
  ***/
-vector<int> AdjacentSameWindowCountingPrimWithEverything(vector<unsigned int> channels, vector<unsigned int> adcs, vector<unsigned int> tots){
-  vector<int> max(5,0);
+std::vector<int> AdjacentSameWindowCountingPrimWithEverything(std::vector<unsigned int> channels, std::vector<unsigned int> adcs, std::vector<unsigned int> tots){
+  std::vector<int> max(5,0);
   int adj = 1;
   int tpc_1_sum = 0;
   int tpc_2_sum = 0;
@@ -298,8 +298,8 @@ This performs the above described "Adjacency" method (AdjacentSameWindowCounting
 
 Relative to above, the sum total of all TOTs has been removed since we do not expect to use it as of right now.
 ***/
-vector<int> PDUNEAdjacencyWithEverything(vector<unsigned int> channels, vector<unsigned int> times, vector<unsigned int> adcs, vector<unsigned int> tots){
-  vector<int> max(8,0);
+std::vector<int> PDUNEAdjacencyWithEverything(std::vector<unsigned int> channels, std::vector<unsigned int> times, std::vector<unsigned int> adcs, std::vector<unsigned int> tots){
+  std::vector<int> max(8,0);
   int adj = 1;
   int tpc_1_sum = 0;
   int tpc_2_sum = 0;
@@ -351,52 +351,56 @@ PDUNEAdjacency:
 
 Same as PDUNEAdjacencyWithEverything, but handles the TP struct as opposed to the separate values
 ***/
-vector<int> PDUNEAdjacency(vector<TP> TPs){
-  vector<int> max(8,0);
-  int adj = 1;
-  int tpc_1_sum = 0;
-  int tpc_2_sum = 0;
-  unsigned int channel = 0;
-  unsigned int next_channel = 0;
-  unsigned int next = 0;
+
+///////////////////////
+
+TC PDUNEAdjacency(vector<TP> TPs){
+  TC tc = {0,0,0,0,0,0,0,0,0};
+  int adj = 1; 
+  int channel = 0; 
+  int next_channel = 0; 
+  int next = 0; 
+  uint32_t tpc_1_sum = 0; 
+  uint32_t tpc_2_sum = 0; 
   int first_channel = TPs.at(0).channel;
-  int first_time = TPs.at(0).tstart;
+  uint64_t first_time = TPs.at(0).tstart;
+
   for (unsigned int i=0; i < TPs.size(); ++i){
-    if ((int)(TPs.at(i).adcsum) > max.at(1)){
-      max.at(1) = TPs.at(i).adcsum;
-    }
-    if ((int)(TPs.at(i).tspan) > max.at(3)){
-      max.at(3) = TPs.at(i).tspan;
-    }
+    if ((TPs.at(i).adcsum) > tc.adcpeak){
+      tc.adcpeak = TPs.at(i).adcsum;
+    }    
+    if ((TPs.at(i).tspan) > tc.tspan){
+      tc.tspan = TPs.at(i).tspan;
+    }    
     next = (i+1)%TPs.size();
-    channel = TPs.at(i).channel;
-    next_channel = TPs.at(next).channel;
-    if ((int)(channel%nChannels) < (nChannels-nColl/2))tpc_1_sum += TPs.at(i).adcsum;
+    channel = (int)TPs.at(i).channel;
+    next_channel = (int)TPs.at(next).channel;
+    if ((channel%nChannels) < (nChannels-nColl/2))tpc_1_sum += TPs.at(i).adcsum;
     else tpc_2_sum += TPs.at(i).adcsum;
     if (next==0){
       next_channel=channel-1;
-    }
+    }    
     if (next_channel == channel) continue;
-    else if ((next_channel-channel) <= 2){
+    else if ((next_channel-channel) <= 5){
     //else if (next_channel == channel+1){
       adj += (next_channel-channel);
-    }
+    }    
     else{
-      if(adj > max.at(0)){
-        max.at(0) = adj;
-	max.at(5) = (int)channel%nChannels-1600;
-	max.at(7) = (int)TPs.at(i).tstart;
-	max.at(4) = (int)first_channel%nChannels-1600;
-	max.at(6) = (int)first_time;
-      }
-      first_channel = (int)next_channel;
+      if(adj > (int)tc.adjacency){
+        tc.adjacency = (uint32_t)adj;
+        tc.last_ch = (uint32_t)(channel%nChannels-1600);
+        tc.last_time = TPs.at(i).tstart;
+        tc.first_ch = (uint32_t)(first_channel%nChannels-1600);
+        tc.first_time = first_time;
+      }    
+      first_channel = next_channel;
       first_time = TPs.at(next).tstart;
-      adj = 1;
-    }
+      adj = 1; 
+    }    
   }
-  if (tpc_1_sum > tpc_2_sum) max.at(2) = tpc_1_sum;
-  else max.at(2) = tpc_2_sum;
-  return max;
+  if (tpc_1_sum > tpc_2_sum) tc.adcsum = tpc_1_sum;
+  else tc.adcsum = tpc_2_sum;
+  return tc;
 }
 
 /***
@@ -404,8 +408,8 @@ TimeAdjacentCounting:
 
 Clustering code for the method called "Clustering". This method assumes that the primitives are ordered in increasing channel order. Returns the largest cluster size as chosen by the one with the largest charge in a sub-window or the largest sub-window adjacency, whichever is larger.
  ***/
-int TimeAdjacentCounting(vector<vector<unsigned int>> channels, vector<vector<unsigned int>> adcs){
-  vector<int> max(2,0);
+int TimeAdjacentCounting(std::vector<std::vector<unsigned int>> channels, std::vector<std::vector<unsigned int>> adcs){
+  std::vector<int> max(2,0);
   int maximum;
   int adj_prim = 1;
   int max_adj = 0;
@@ -424,13 +428,13 @@ int TimeAdjacentCounting(vector<vector<unsigned int>> channels, vector<vector<un
 
   //Loop over all sub-windows.
   for (unsigned int i=0;i < channels.size(); ++i){
-    //cout << "Time: " << i << endl;
-    //cout << "CURRENT cluster size: " << adj << endl;
-    //cout << "Center at: " << center << " w/ Range: " << range << " from time: " << old << " at time: " << i << endl;
+    //std::cout << "Time: " << i << std::endl;
+    //std::cout << "CURRENT cluster size: " << adj << std::endl;
+    //std::cout << "Center at: " << center << " w/ Range: " << range << " from time: " << old << " at time: " << i << std::endl;
 
     //Check that the charge list and channel list are the same size. If not, something went wrong.
     if (channels.at(i).size() != adcs.at(i).size()){
-      cout << "SORTING BROKE" << endl;
+      std::cout << "SORTING BROKE" << std::endl;
       max.at(0) = -1;
       max.at(1) = -1;
       break;
@@ -440,9 +444,9 @@ int TimeAdjacentCounting(vector<vector<unsigned int>> channels, vector<vector<un
 
     //Simpler if there is only one hit in the sub-window.
     else if (channels.at(i).size() == 1){
-      //      cout << "Single Hit on Channel: " << channels.at(i).at(0) << endl;
-      // cout << "Window Tick: " << i << endl;
-      // cout << "Channels: " << channels.at(i).at(0) << endl;
+      //      std::cout << "Single Hit on Channel: " << channels.at(i).at(0) << std::endl;
+      // std::cout << "Window Tick: " << i << std::endl;
+      // std::cout << "Channels: " << channels.at(i).at(0) << std::endl;
 
       //Only work in cases where the sub-window you are on is less than "too_far" away from the previous non-empty sub-window.
       //Generally, too_far is 2. Set above at start of code.
@@ -477,7 +481,7 @@ int TimeAdjacentCounting(vector<vector<unsigned int>> channels, vector<vector<un
     //If there is more than one primitive in the sub-window.
     else{
 
-      //cout << "Channels: ";
+      //std::cout << "Channels: ";
 
       adc = 0;
       max_center = 400000000;
@@ -493,15 +497,15 @@ int TimeAdjacentCounting(vector<vector<unsigned int>> channels, vector<vector<un
         last_channel = channel;
         channel = channels.at(i).at(j);
 
-        //cout << "Channel: " << channel << endl;
-        //cout << "Last Channel: " << last_channel << endl;
+        //std::cout << "Channel: " << channel << std::endl;
+        //std::cout << "Last Channel: " << last_channel << std::endl;
 
         if (channel == last_channel){
           adc += adcs.at(i).at(j);
           continue;
         }
         else if (channel == (last_channel+1)){
-          //cout << "Upping Adj_Prim" << endl;
+          //std::cout << "Upping Adj_Prim" << std::endl;
           adc += adcs.at(i).at(j);
           ++adj_prim;
           tmp_center +=0.5;
@@ -520,7 +524,7 @@ int TimeAdjacentCounting(vector<vector<unsigned int>> channels, vector<vector<un
           adj_prim = 1;
           adc = adcs.at(i).at(j);
         }
-        //cout << "Adj. Prim: " << adj_prim << endl;
+        //std::cout << "Adj. Prim: " << adj_prim << std::endl;
       }
 
       //Check that the last sub-window adjacency is not the largest in either adjacency or summedADC. If it is, update variables accordingly.
@@ -567,8 +571,8 @@ int TimeAdjacentCounting(vector<vector<unsigned int>> channels, vector<vector<un
 
   if (adj > max.at(0)) max.at(0) = adj;
 
-  //cout << "TOT Adj.: " << max.at(0) << endl;
-  //cout << "Prim. Adj.: " << max.at(1) << endl;
+  //std::cout << "TOT Adj.: " << max.at(0) << std::endl;
+  //std::cout << "Prim. Adj.: " << max.at(1) << std::endl;
 
   if (max.at(0) >= max.at(1)) maximum = max.at(0);
   else maximum = max.at(1);
@@ -585,9 +589,9 @@ Performs "Clustering" (as described in TimeAdjacentCounting) while also checking
 3) Maximum single-primitive TOT in the window
 4) Total Sum of all TOTs in the window
  ***/
-vector<int> TimeAdjacentCountingWithEverything(vector<vector<unsigned int>> channels, vector<vector<unsigned int>> adcs, vector<vector<unsigned int>> tots){
-  vector<int> maxadj(2,0);
-  vector<int> max(5,0);
+std::vector<int> TimeAdjacentCountingWithEverything(std::vector<std::vector<unsigned int>> channels, std::vector<std::vector<unsigned int>> adcs, std::vector<std::vector<unsigned int>> tots){
+  std::vector<int> maxadj(2,0);
+  std::vector<int> max(5,0);
   int adj_prim = 1;
   int max_adj = 0;
   int adj = 1;
@@ -607,11 +611,11 @@ vector<int> TimeAdjacentCountingWithEverything(vector<vector<unsigned int>> chan
   int tpc_2_sum = 0;
 
   for (unsigned int i=0;i < channels.size(); ++i){
-    //cout << "Time: " << i << endl;
-    //cout << "CURRENT cluster size: " << adj << endl;
-    //cout << "Center at: " << center << " w/ Range: " << range << " from time: " << old << " at time: " << i << endl;
+    //std::cout << "Time: " << i << std::endl;
+    //std::cout << "CURRENT cluster size: " << adj << std::endl;
+    //std::cout << "Center at: " << center << " w/ Range: " << range << " from time: " << old << " at time: " << i << std::endl;
     if (channels.at(i).size() != adcs.at(i).size() || channels.at(i).size() != tots.at(i).size() ){
-      cout << "SORTING BROKE" << endl;
+      std::cout << "SORTING BROKE" << std::endl;
       maxadj.at(0) = -1;
       maxadj.at(1) = -1;
       break;
@@ -628,9 +632,9 @@ vector<int> TimeAdjacentCountingWithEverything(vector<vector<unsigned int>> chan
       }
       if ((int)(channels.at(i).at(0)%nChannels) < (nChannels-nColl/2))tpc_1_sum += adcs.at(i).at(0);
       else tpc_2_sum += adcs.at(i).at(0);
-      //      cout << "Single Hit on Channel: " << channels.at(i).at(0) << endl;
-      // cout << "Window Tick: " << i << endl;
-      // cout << "Channels: " << channels.at(i).at(0) << endl;
+      //      std::cout << "Single Hit on Channel: " << channels.at(i).at(0) << std::endl;
+      // std::cout << "Window Tick: " << i << std::endl;
+      // std::cout << "Channels: " << channels.at(i).at(0) << std::endl;
 
       if ((i-old) < too_far){
         if (fabs(channels.at(i).at(0)-center) <= range) ++adj;
@@ -651,7 +655,7 @@ vector<int> TimeAdjacentCountingWithEverything(vector<vector<unsigned int>> chan
     }
     else{
 
-      //cout << "Channels: ";
+      //std::cout << "Channels: ";
 
       adc = 0;
       max_center = 400000000;
@@ -675,15 +679,15 @@ vector<int> TimeAdjacentCountingWithEverything(vector<vector<unsigned int>> chan
         if ((int)(channel%nChannels) < (nChannels-nColl/2))tpc_1_sum += adcs.at(i).at(j);
         else tpc_2_sum += adcs.at(i).at(j);
 
-        //cout << "Channel: " << channel << endl;
-        //cout << "Last Channel: " << last_channel << endl;
+        //std::cout << "Channel: " << channel << std::endl;
+        //std::cout << "Last Channel: " << last_channel << std::endl;
 
         if (channel == last_channel){
           adc += adcs.at(i).at(j);
           continue;
         }
         else if (channel == (last_channel+1)){
-          //cout << "Upping Adj_Prim" << endl;
+          //std::cout << "Upping Adj_Prim" << std::endl;
           adc += adcs.at(i).at(j);
           ++adj_prim;
           tmp_center +=0.5;
@@ -702,7 +706,7 @@ vector<int> TimeAdjacentCountingWithEverything(vector<vector<unsigned int>> chan
           adj_prim = 1;
           adc = adcs.at(i).at(j);
         }
-        //cout << "Adj. Prim: " << adj_prim << endl;
+        //std::cout << "Adj. Prim: " << adj_prim << std::endl;
       }
 
       if (adj_prim > maxadj.at(1)) maxadj.at(1) = adj_prim;
@@ -747,8 +751,8 @@ vector<int> TimeAdjacentCountingWithEverything(vector<vector<unsigned int>> chan
 
   if (adj > maxadj.at(0)) maxadj.at(0) = adj;
 
-  //cout << "TOT Adj.: " << maxadj.at(0) << endl;
-  //cout << "Prim. Adj.: " << maxadj.at(1) << endl;
+  //std::cout << "TOT Adj.: " << maxadj.at(0) << std::endl;
+  //std::cout << "Prim. Adj.: " << maxadj.at(1) << std::endl;
 
   if (maxadj.at(0) >= maxadj.at(1)) max.at(0) = maxadj.at(0);
   else max.at(0) = maxadj.at(1);
@@ -766,8 +770,8 @@ WindowCounting comments:
 NOT COMMONLY USED.
 Input of all hits in an APA. Return maximum number in a single window (not necessarily adjacent).
  ***/
-int WindowCounting(vector<unsigned int> time_vec){
-  vector<int> window_vec(nticks/windows+1,0);
+int WindowCounting(std::vector<unsigned int> time_vec){
+  std::vector<int> window_vec(nticks/windows+1,0);
   for (unsigned int i=0; i < time_vec.size(); ++i){
     ++window_vec.at((int)time_vec.at(i)/windows);
   }
@@ -783,9 +787,9 @@ FindMaxTOTCluster comments:
 NOT COMMONLY USED.
 Loop through vector of TOTs in a window. Return the largest single primitive TOT found in that window and the Largest sum of TOTs within a sub-window. 
  ***/
-vector<unsigned int> FindMaxTOTCluster(vector<vector<unsigned int>> tots_per_window){
-  vector<unsigned int> tots;
-  vector<unsigned int> maxtot(2,0);
+std::vector<unsigned int> FindMaxTOTCluster(std::vector<std::vector<unsigned int>> tots_per_window){
+  std::vector<unsigned int> tots;
+  std::vector<unsigned int> maxtot(2,0);
   unsigned int max = 0;
   unsigned int current = 0;
   unsigned int max_total = 0;
@@ -816,9 +820,9 @@ FindMaxSumADCCluster comments:
 NOT COMMONLY USED.
 Same as the above for TOT but for SummedADC (charge stand-in) of the primitives.
  ***/
-vector<unsigned int> FindMaxSumADCCluster(vector<vector<unsigned int>> sum_adc_per_window){
-  vector<unsigned int> sum_adc;
-  vector<unsigned int> maxadc(2,0);
+std::vector<unsigned int> FindMaxSumADCCluster(std::vector<std::vector<unsigned int>> sum_adc_per_window){
+  std::vector<unsigned int> sum_adc;
+  std::vector<unsigned int> maxadc(2,0);
   unsigned int max = 0;
   unsigned int current = 0;
   unsigned int max_total = 0;
@@ -849,8 +853,8 @@ FindMaxTOTPrim comments:
 NOT COMMONLY USED.
 Loop through vector of TOTs in a window. Return the largest TOT found in that window and the average of the TOTs in that window.
  ***/
-vector<unsigned int> FindMaxTOTPrim(vector<unsigned int> tots){
-  vector<unsigned int> maxtot(2,0);
+std::vector<unsigned int> FindMaxTOTPrim(std::vector<unsigned int> tots){
+  std::vector<unsigned int> maxtot(2,0);
   unsigned int max = 0;
   unsigned int current = 0;
   unsigned int total = 0;
@@ -874,8 +878,8 @@ FindMaxSumADCPrim comments:
 NOT COMMONLY USED.
 Same as the above for TOT but for SummedADC (charge stand-in) of the primitives.
  ***/
-vector<unsigned int> FindMaxSumADCPrim(vector<unsigned int> sum_adc_tpc_1, vector<unsigned int> sum_adc_tpc_2){
-  vector<unsigned int> maxadc(3,0);
+std::vector<unsigned int> FindMaxSumADCPrim(std::vector<unsigned int> sum_adc_tpc_1, std::vector<unsigned int> sum_adc_tpc_2){
+  std::vector<unsigned int> maxadc(3,0);
   unsigned int max = 0;
   unsigned int current = 0;
   unsigned int total_1 = 0;
@@ -919,8 +923,8 @@ RightAdjacentLaterWindowCounting Comments:
 
 Function that clusters across sub-windows and up one in wire. Replaced by more complex "Clustering".
  ***/
-int RightAdjacentLaterWindowCounting(vector<vector<unsigned int>> channels_per_window){
-  vector<vector<unsigned int>> channels(channels_per_window);
+int RightAdjacentLaterWindowCounting(std::vector<std::vector<unsigned int>> channels_per_window){
+  std::vector<std::vector<unsigned int>> channels(channels_per_window);
   int max = 0;
   int adj = 1;
   unsigned int channel = 0;
@@ -974,8 +978,8 @@ SameAdjacentLaterWindowCounting Comments:
 
 Function that clusters across sub-windows on the same wire. Replaced by more complex "Clustering".
  ***/
-int SameAdjacentLaterWindowCounting(vector<vector<unsigned int>> channels_per_window){
-  vector<vector<unsigned int>> channels(channels_per_window);
+int SameAdjacentLaterWindowCounting(std::vector<std::vector<unsigned int>> channels_per_window){
+  std::vector<std::vector<unsigned int>> channels(channels_per_window);
   int max = 0;
   int adj = 1;
   int channel = 0;
@@ -1029,8 +1033,8 @@ LeftAdjacentLaterWindowCounting Comments:
 
 Function that clusters across sub-windows and down one in wire. Replaced by more complex "Clustering".
  ***/
-int LeftAdjacentLaterWindowCounting(vector<vector<unsigned int>> channels_per_window){
-  vector<vector<unsigned int>> channels(channels_per_window);
+int LeftAdjacentLaterWindowCounting(std::vector<std::vector<unsigned int>> channels_per_window){
+  std::vector<std::vector<unsigned int>> channels(channels_per_window);
   int max = 0;
   int adj = 1;
   unsigned int channel = 0;
@@ -1084,13 +1088,13 @@ LeftAdjacentLaterWindowCounting Comments:
 
 Function that clusters within sub-windows. Replaced by more complex "Clustering".
  ***/
-int AdjacentSameWindowCountingCluster(vector<vector<unsigned int>> channels_per_window){
+int AdjacentSameWindowCountingCluster(std::vector<std::vector<unsigned int>> channels_per_window){
   int max = 0;
   int adj = 1;
   unsigned int channel = 0;
   unsigned int next_channel = 0;
   unsigned int next = 0;
-  vector<unsigned int> channels;
+  std::vector<unsigned int> channels;
   for (unsigned int it=0; it < channels_per_window.size(); ++it){
     if (channels_per_window.at(it).size()==0) continue;
     channels = channels_per_window.at(it);

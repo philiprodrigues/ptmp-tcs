@@ -1,12 +1,10 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-#include <sstream>
 #include <vector>
+#include <sstream>
 #include <algorithm>
 #include <cmath>
 
-using namespace std;
-
-vector<int> TriggerCandidate(vector<TP>, int clustering=0);
-vector<int> TriggerCandidateHits(vector<unsigned int> channels, vector<unsigned int> times, vector<unsigned int> tots, vector<unsigned int> adcs, int clustering=0);
+TC TriggerCandidate(std::vector<TP>, int adj_thresh,  int clustering=0);
+std::vector<int> TriggerCandidateHits(std::vector<unsigned int> channels, std::vector<unsigned int> times, std::vector<unsigned int> tots, std::vector<unsigned int> adcs, int clustering=0);
