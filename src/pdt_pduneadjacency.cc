@@ -7,27 +7,41 @@
 #include <limits>
 
 // #include "pdt/AdjacencyAlgorithms.h"
+
 struct TP{
-    unsigned int channel;
-    unsigned int tstart;
-    unsigned int tspan;
-    unsigned int adcsum;
-    unsigned int adcpeak;
-    unsigned int flags;
+    uint32_t channel;
+    uint64_t tstart;
+    uint32_t tspan;
+    uint32_t adcsum;
+    uint32_t adcpeak;
+    uint32_t flags;
 };
+struct TC{
+  uint32_t adjacency;
+  uint32_t adcpeak;
+  uint32_t adcsum;
+  uint32_t tspan;
+  uint32_t first_ch;
+  uint32_t last_ch;
+  uint64_t tstart;
+  uint64_t first_time;
+  uint64_t last_time;
+  int apanum;
+};
+
 // #include "pdt/TriggerCandidate.h"
-std::vector<int> TriggerCandidate(std::vector<TP>, int clustering=0);
+TC TriggerCandidate(std::vector<TP>, int adj_thresh, int clustering=0);
 
 using json = nlohmann::json;
 
 // Fixme: TrigPrim holds 50MHz clocks, PDT assumes 2MHz
-const int hwtick_per_internal = 25;
+const uint32_t hwtick_per_internal = 25;
 
 static
 TP convert(const ptmp::data::TrigPrim& tp)
 {
     // Fixme: eventually get rid of this cast
-    const uint32_t tstart = (uint32_t) (tp.tstart()/hwtick_per_internal);
+    const uint64_t tstart = tp.tstart() / (uint64_t)hwtick_per_internal;
     const uint32_t tspan = std::max((uint32_t)1, tp.tspan()/hwtick_per_internal);
     return TP{ tp.channel(), tstart, tspan, tp.adcsum(), tp.adcpeak(), tp.flags() };
 }
@@ -76,6 +90,13 @@ public:
         // ptmp::data::dump(input_tpset, "recv");
 
         const ptmp::data::data_time_t this_tstart = input_tpset.tstart();
+        // Skip TPSet if the data is from a wall-facing link.
+        // In APA 5&6 it turns out that the wall-facing links are all on fiber 2. 
+        // detid contains (fiber_no << 16) | (slot_no << 8) | m_crate_no
+        size_t fiber_no = (input_tpset.detid() >> 16) & 0xff;
+        if(fiber_no == 2){ 
+            return;
+        } 
         if (outbound.tps().empty()) {
             outbound.set_tstart(this_tstart);
             outbound.set_detid(input_tpset.detid());
@@ -103,29 +124,30 @@ public:
                   [](const TP& a, const TP& b) {
                       return a.channel < b.channel;
                   });
-        auto tcvec = TriggerCandidate(pdt_tps);
+        TC tc = TriggerCandidate(pdt_tps, 100);
         // this returns an 8-tuple of ints which may be empty.
         //     0         1       2       3      4      5     6    7
         // (adjacency, adcpeak, adcsum, tspan, chan1, chan2, t1, t2)
     
-        if (tcvec.size() == 8) {
+        if (tc.adjacency > 0) {
             outbound.set_count(1+outbound.count());
             // detid set on first input
             outbound.set_created(ptmp::data::now());
             outbound.set_tstart(this_tstart); // sync input/output time.
             outbound.set_tspan(twindow);      // means time checked.
-            outbound.set_chanbeg(tcvec.at(4));
-            outbound.set_chanend(tcvec.at(5));
-            outbound.set_totaladc(tcvec.at(2));
-
+            outbound.set_chanbeg(tc.first_ch);
+            outbound.set_chanend(tc.last_ch);
+            outbound.set_totaladc(tc.adcsum);
             // PDT requires passing the "adjacency" which is not in the
             // TPSet/TrigPrim model.  So, we cheat.
             ptmp::data::TrigPrim* newtp = outbound.add_tps();
             newtp->set_channel(0);
-            newtp->set_tstart(hwtick_per_internal*std::min(tcvec.at(6), tcvec.at(7)));
-            newtp->set_tspan(hwtick_per_internal*std::abs(tcvec.at(7) - tcvec.at(6)));
-            newtp->set_adcsum(tcvec.at(2));
-            newtp->set_adcpeak(tcvec.at(0));
+            newtp->set_tstart(hwtick_per_internal*std::min(tc.first_time, tc.last_time));
+            // uint64_t so be careful taking the difference
+            newtp->set_tspan( hwtick_per_internal*(std::max(tc.first_time, tc.last_time) - std::min(tc.first_time, tc.last_time)) );
+            newtp->set_adcsum(tc.adcsum);
+            newtp->set_adcpeak(tc.adjacency);
+ 
             newtp->set_flags(PDT_SPECIAL_TP);
 
             output_tpsets.push_back(outbound);
