@@ -28,12 +28,21 @@ if [ -z "$prefix" ] ; then
 fi
 echo "installing to $prefix"
 
+args="--with-protobuf=$PROTOBUF_FQ_DIR"
+args="$args --with-libzmq-lib=$ZEROMQ_LIB --with-libzmq-include=$ZEROMQ_INC"
+args="$args --with-libczmq-lib=$CZMQ_LIB --with-libczmq-include=$CZMQ_INC"
+if [ -n "$PTMP_INC" -a -n "$PTMP_LIB" ] ; then
+    echo "Using PTMP include and lib from environment"
+    args="$args --with-ptmp-include=$PTMP_INC --with-ptmp-lib=$PTMP_LIB"
+elif [ -d pdt ] ; then
+    echo 
+    echo "Warning: looks like this is ptmp-tcs but no sign of PTMP in UPS variables"
+    echo "I guess this will fail"
+    echo 
+fi
 
-./tools/waf configure \
-      --with-libzmq-lib=$ZEROMQ_LIB --with-libzmq-include=$ZEROMQ_INC \
-      --with-libczmq-lib=$CZMQ_LIB --with-libczmq-include=$CZMQ_INC \
-      --with-protobuf=$PROTOBUF_FQ_DIR \
-      --prefix=$prefix || exit 1
-
+set -x
+./tools/waf configure $args --prefix=$prefix || exit 1
+set +x
 
 echo "Now maybe run './tools/waf --notests install', etc"
