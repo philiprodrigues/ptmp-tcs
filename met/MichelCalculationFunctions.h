@@ -36,62 +36,62 @@ struct TP{
 
 template<typename T>
 std::vector<std::vector<T> > get_windows(const std::vector<T>& the_thing,
-                                         const size_t window_size)
+                                         const size_t window_size);
 
-double mean(const std::vector<double>& data)
+double mean(const std::vector<double>& data);
 
 double cov (const std::vector<double>& data1,
-            const std::vector<double>& data2)
+            const std::vector<double>& data2);
 
-double stdev(const std::vector<double>& data)
+double stdev(const std::vector<double>& data);
 
 std::vector<double>  calc_covariance(const std::vector<TP>& hits,
-                                     const int _n_window_size)
+                                     const int _n_window_size);
 
 template<typename W>
-void cut(std::vector<W>& data,  double frac)
+void cut(std::vector<W>& data,  double frac);
 
 void OrderPoints(size_t start_index,
                  const std::vector<TP>& TPs,
                  const double& d_cutoff,
                  std::vector<size_t>& ordered_TPs_index,
                  std::vector<double>& average_TP_distance_neighbors,
-                 std::vector<double>& average_TP_distance)
+                 std::vector<double>& average_TP_distance);
 
-ProcessTPs( std::vector< TP> &TPs,
+void ProcessTPs( std::vector< TP> &TPs,
            std::vector<size_t> &ordered_TPs,
            std::vector<double> &average_TP_distance ,
            std::vector<double> &average_TP_distance_neighbors,
-           const double& d_cutoff )
+           const double& d_cutoff );
 
 template<typename S>
-S calc_mean(const std::vector<S>& data)
+S calc_mean(const std::vector<S>& data);
 
 std::vector<double> do_smooth_mean( const std::vector<double>& dq,
                                    const double n_window_size,
                                    const int window_cutoff,
-                                   const double p_above)
+                                   const double p_above);
 
 std::vector<double> calc_smooth_mean(const std::vector<TP> &TPs,
                                      const std::vector<size_t> ordered_TPs,
                                      const double n_window_size,
                                      const int window_cutoff,
-                                     const double p_above)
+                                     const double p_above);
 
-unsigned int nCk( unsigned int n, unsigned int k )
+unsigned int nCk( unsigned int n, unsigned int k );
 
-double coeff(double k, double N)
+double coeff(double k, double N);
 
 double do_smooth_derive(const std::vector<double>& f,
                         const std::vector<double>& x,
-                        int N)
+                        int N);
 
 std::vector<double> calc_smooth_derive(const std::vector<double>&            average_TP_distance,
                                        const std::vector<double>& tmeans,
-                                       const int s)
+                                       const int s);
 
 std::vector<double> calc_slope(const std::vector<TP>& hits,
-                               const int n_window_size)
+                               const int n_window_size);
 
 bool CalcTruncated( const std::vector<TP>& TPs,
                    const std::vector<size_t> &ordered_TPs,
@@ -104,19 +104,20 @@ bool CalcTruncated( const std::vector<TP>& TPs,
                    int covariance_window,
                    int n_window_size,
                    double p_above,
-                   int window_cutoff )
+                   int window_cutoff );
 
-size_t find_max(const std::vector<double>& data)
+size_t find_max(const std::vector<double>& data);
 
-BoundaryFromTQMaxQ(const std::vector<TP>& TPs,
+bool BoundaryFromTQMaxQ(const std::vector<TP>& TPs,
                    const std::vector<double> &truncated_mean,
                    const std::vector<size_t> &ordered_TPs,
                    const size_t maxDistance,
-                   int &boundary )
+                   int &boundary );
 
 bool RequireBoundaryInLowCov(const std::vector<TP>& TPs,
                              const std::vector< double> &covariance,
                              const int boundary,
-                             double _maxCovarianceAtStart = 0.9)
+                             double maxCovarianceAtStart);
 
 #endif /* MICHELCALCULATIONFUNCTIONS_H */
+

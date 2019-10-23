@@ -478,7 +478,7 @@ bool BoundaryFromTQMaxQ(const std::vector<TP>& TPs, const std::vector<double> &t
 bool RequireBoundaryInLowCov(const std::vector<TP>& TPs,
                              const std::vector< double> &covariance,
                              const int boundary,
-                             double _maxCovarianceAtStart = 0.9)
+                             double maxCovarianceAtStart)
 {
 
   if (TPs.size() == 0) return false;
@@ -514,7 +514,7 @@ bool RequireBoundaryInLowCov(const std::vector<TP>& TPs,
   // the max allowed covariance
   avg_covariance /= counts;
 
-  if (avg_covariance > _maxCovarianceAtStart)
+  if (avg_covariance > maxCovarianceAtStart)
     return false;
 
   return true;

@@ -1,5 +1,5 @@
 #include "MichelTriggerModule.h"
-#include "MichelCalculationFunction.h"
+#include "MichelCalculationFunctions.h"
 
 int MichelTriggerModule(std::vector<TriggerCandidate> candidates){
     //using namespace std;
@@ -75,8 +75,8 @@ int MichelTriggerModule(std::vector<TriggerCandidate> candidates){
         //std::cout <<std::setprecision(30)<<Michel_candidates.at(0).second <<std::endl;
         //std::cout << tmp2 << std::endl;
         //auto first_tp = std::find_if(candidates.begin(),candidates.end(),[](const TP& tps){return tps.tstart == Michel_candidates.at(0).first ;});
-        auto first_tp = std::find_if(candidates.begin(),candidates.end(),[tmp1](const TP& tp_1){return (double)tp_1.tstart == tmp1 ;});
-        auto last_tp = std::find_if(candidates.begin(),candidates.end(),[tmp2](const TP& tp_2){return (double)tp_2.tstart == tmp2 ;});
+        auto first_tp = std::find_if(tpset.tp.begin(),tpset.tp.end(),[tmp1](const TP& tp_1){return (double)tp_1.tstart == tmp1 ;});
+        auto last_tp = std::find_if(tpset.tp.begin(),tpset.tp.end(),[tmp2](const TP& tp_2){return (double)tp_2.tstart == tmp2 ;});
 
     //std::cout << first_tp -candidates.begin() <<std::endl;
     //std::cout << last_tp - candidates.begin() << std::endl;
@@ -106,15 +106,15 @@ int MichelTriggerModule(std::vector<TriggerCandidate> candidates){
         int n_window_size = 15;
         double p_above = 0.25;
         int window_cutoff = 3;
-        bool calculate_truncated = CalcTruncated(trigger_hits, average_TP_distance, truncated_mean, truncated_dqds, covariance, slope, edge_fix, covariance_windowm n_window_size, p_above,window_cutoff);
+        bool calculate_truncated = CalcTruncated(trigger_hits, ordered_TPs, average_TP_distance, truncated_mean, truncated_dqds, covariance, slope, edge_fix, covariance_window, n_window_size, p_above,window_cutoff);
         
         //if calculate truncated worked, move on
         if (calculate_truncated){
             size_t maxDistance = 20;
             int boundary = 0;
-            bool find_BoundaryFromTQMaxQ = BoundaryFromTQMaxQ(trigger_hits,truncated_mean,ordered_TPs,maxDistance,boundary);
+            bool find_Boundary = BoundaryFromTQMaxQ(trigger_hits,truncated_mean,ordered_TPs,maxDistance,boundary);
             //if boundary found, move on
-            if (find_BoundaryFromTQMaxQ)
+            if (find_Boundary)
             {
                 bool lowCovinBoundary = RequireBoundaryInLowCov(trigger_hits,covariance,boundary,0.9);
                 if (lowCovinBoundary) return 0;
