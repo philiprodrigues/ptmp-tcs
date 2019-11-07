@@ -11,18 +11,19 @@ IsoMuon_engine::IsoMuon_engine(const std::string& config)
     try{
         if (jcfg["engine_config"]["hits_per_link_threshold"].is_number()) {
             hits_per_link_threshold_ = jcfg["engine_config"]["hits_per_link_threshold"];
+            zsys_info("isomuon: hits_per_link_threshold set to %d from json config", hits_per_link_threshold_);
         }
     }
     catch(nlohmann::detail::exception& e){
-        zsys_warning("Caught exception while reading config: %s", e.what());
+        zsys_warning("isomuon: Caught exception while reading config: %s", e.what());
     }
 }
 
 IsoMuon_engine::~IsoMuon_engine()
 {
-    zsys_info("Received %ld TPSets. TPC-facing: %ld, Wall-facing: %ld ", n_sets_total, n_sets_tpc, n_sets_wall);
-    zsys_info("Maximum number of channels hit in a window: %ld", max_n_chan_hit);
-    zsys_info("Issued %ld trigger candidates", n_triggers);
+    zsys_info("isomuon: Received %ld TPSets. TPC-facing: %ld, Wall-facing: %ld ", n_sets_total, n_sets_tpc, n_sets_wall);
+    zsys_info("isomuon: Maximum number of channels hit in a window: %ld", max_n_chan_hit);
+    zsys_info("isomuon: Issued %ld trigger candidates", n_triggers);
 }
 
 void IsoMuon_engine::operator()(const ptmp::data::TPSet& in_set,
@@ -30,6 +31,9 @@ void IsoMuon_engine::operator()(const ptmp::data::TPSet& in_set,
 {
 
     ++n_sets_total;
+    if(n_sets_total%20000==0){
+        zsys_debug("isomuon: n_sets_total=%ld", n_sets_total);
+    }
     // If the data is from a wall-facing link, just ignore
     // it. In APA 5, it turns out that the wall-facing links
     // are all fiber 2. detid contains (fiber_no << 16) |
@@ -94,7 +98,7 @@ void IsoMuon_engine::operator()(const ptmp::data::TPSet& in_set,
     ++n_sources;
     for(auto const& tp: in_set.tps()){
         if(tp.channel()-min_channel >= has_hit.size()){
-            zsys_error("Got too-large channel: %d with min channel %d and bitset capacity %ld",
+            zsys_error("isomuon: Got too-large channel: %d with min channel %d and bitset capacity %ld",
                        tp.channel(), min_channel, has_hit.size());
         }
         else{

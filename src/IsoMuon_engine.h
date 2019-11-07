@@ -13,7 +13,7 @@
 //
 // This is a particularly simple and not very smart condition: a
 // nearly-horizontal muon will trigger if it happens to fit in one
-// time window, but will not trigger if the same muon is displace in
+// time window, but will not trigger if the same muon is displaced in
 // time a bit so that it straddles two windows. Also, there's nothing
 // in the algorithm itself forcing the muon to be "horizontal": if you
 // make the TPWindow wider, the muon can go at any angle as long as it
@@ -65,15 +65,14 @@ private:
     // *any* time window: used to calculate the overall threshold
     size_t max_n_sources{0};
             
-    static constexpr size_t apa5_offline_number{1};
-    // const size_t apa6_offline_number=3;
     static constexpr size_t channels_per_apa{2560};
-    static constexpr size_t min_channel{channels_per_apa*apa5_offline_number};
+    static constexpr size_t min_channel{0};
     // Did we get a hit on this channel in this time window? Extremely
-    // dumb because it has a spot for every possible channel in APA 5
-    // and 6, even though most are induction and won't have hits. But
-    // this makes the later code easier
-    std::bitset<3*channels_per_apa> has_hit;
+    // dumb because it has a spot for every possible channel in every
+    // APA, even though not all APAs are read out with FELIX, and most
+    // channels are induction and won't have hits. But this makes the
+    // later code easier
+    std::bitset<6*channels_per_apa> has_hit;
             
 };
 
