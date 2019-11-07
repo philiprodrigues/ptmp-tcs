@@ -6,11 +6,16 @@
 
 Coincidence_engine::Coincidence_engine(const std::string& config)
 {
+    zsys_info("Coincidence_engine ctor with config %s", config.c_str());
     auto jcfg = nlohmann::json::parse(config);
     nway=2;
     try{
         if (jcfg["engine_config"]["nway"].is_number()) {
             nway = jcfg["engine_config"]["nway"];
+            zsys_info("coincidence_engine: nway=%d, set from json config", nway);
+        }
+        else{
+            zsys_info("coincidence_engine: jcfg[engine_config][nway] is not number. nway defaults to %d", nway);
         }
     }
     catch(nlohmann::detail::exception& e){
@@ -20,8 +25,8 @@ Coincidence_engine::Coincidence_engine(const std::string& config)
 
 Coincidence_engine::~Coincidence_engine()
 {
-    zsys_info("Received %ld TPSets", n_sets_total);
-    zsys_info("Issued %ld trigger candidates", n_triggers);
+    zsys_info("coincidence_engine: Received %ld TPSets", n_sets_total);
+    zsys_info("coincidence_engine: Issued %ld trigger candidates", n_triggers);
 }
 
 void Coincidence_engine::operator()(const ptmp::data::TPSet& in_set,
@@ -45,7 +50,7 @@ void Coincidence_engine::operator()(const ptmp::data::TPSet& in_set,
 
     if(n_sources==nway){
         // Trigger!
-        zsys_debug("Requesting trigger at 0x%lx at 0x%lx with %ld sources", in_set.tstart(), ptmp::data::now(), n_sources);
+        zsys_debug("coincidence_engine: Requesting trigger at 0x%lx at 0x%lx with %ld sources", in_set.tstart(), ptmp::data::now(), n_sources);
 
         ptmp::data::TPSet trigger_tpset;
         trigger_tpset.set_count(count++);
