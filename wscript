@@ -45,7 +45,7 @@ def build(bld):
 
     #  https://github.com/IrisP25/MichelElectronTriggering
     met = bld.path.find_node("met")
-    src += [met.find_node("MichelTriggerDecision.cpp")]
+    src += [met.find_node("MichelFinder.cc")]
 
     bld.shlib(features='c cxx',
               includes='inc include .',
