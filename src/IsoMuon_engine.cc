@@ -31,7 +31,7 @@ void IsoMuon_engine::operator()(const ptmp::data::TPSet& in_set,
 {
 
     ++n_sets_total;
-    if(n_sets_total%20000==0){
+    if(n_sets_total%200000==0){
         zsys_debug("isomuon: n_sets_total=%ld", n_sets_total);
     }
     // If the data is from a wall-facing link, just ignore
@@ -39,6 +39,8 @@ void IsoMuon_engine::operator()(const ptmp::data::TPSet& in_set,
     // are all fiber 2. detid contains (fiber_no << 16) |
     // (slot_no << 8) | m_crate_no
     size_t fiber_no=(in_set.detid() >> 16) & 0xff;
+    // Crate number = APA number
+    uint32_t crate_no=in_set.detid() & 0xff;
     if(fiber_no==2){
         ++n_sets_wall;
         return;
@@ -69,13 +71,17 @@ void IsoMuon_engine::operator()(const ptmp::data::TPSet& in_set,
         size_t n_chan_hit=has_hit.count();
         if(n_chan_hit>=hits_per_link_threshold_*max_n_sources){
             // Trigger!
-            zsys_debug("Requesting trigger at 0x%lx with %ld (threshold %ld, max_n_sources %ld)",
-                       last_tstart, n_chan_hit, hits_per_link_threshold_*max_n_sources, max_n_sources);
+            ++n_triggers;
             ptmp::data::TPSet trigger_tpset;
             trigger_tpset.set_count(count++);
-            trigger_tpset.set_detid(0xffffff);
+            trigger_tpset.set_detid(crate_no);
             trigger_tpset.set_created(ptmp::data::now());
             trigger_tpset.set_tstart(last_tstart);
+            if(n_triggers && (n_triggers%32==0)){
+                zsys_debug("Requesting trigger # %d (skipped 32) at 0x%lx with %ld (threshold %ld, max_n_sources %ld). detid %d",
+                           n_triggers, last_tstart, n_chan_hit, hits_per_link_threshold_*max_n_sources, max_n_sources, trigger_tpset.detid());
+            }
+
             // ptmp 0.5.0 and later drop empty TPSets, so we need to
             // put at least one TrigPrim in the output TPSet. TODO:
             // the output TPSet should contain the TrigPrims from the
