@@ -36,10 +36,16 @@ def build(bld):
         if p: rpath += p
 
     src = bld.path.ant_glob("src/*.cc")
+
+    # https://github.com/dlast44/ProtoDuneTrigger 
     pdt = bld.path.find_node("pdt")
     src += [pdt.find_node("AdjacencyAlgorithms.cpp"),
             pdt.find_node("TriggerCandidate.cpp"),
             pdt.find_node("ModuleTrigger.cpp")]
+
+    #  https://github.com/IrisP25/MichelElectronTriggering
+    met = bld.path.find_node("met")
+    src += [met.find_node("MichelFinder.cc")]
 
     bld.shlib(features='c cxx',
               includes='inc include .',

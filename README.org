@@ -1,10 +1,19 @@
 #+title: ptmp-tcs: PTMP + Trigger Candidate source
 
-This project tests the TC finder code from  https://github.com/dlast44/ProtoDuneTrigger with PTMP.
+This project integrates some TC/TD finder algorithm functions to [[https://github.com/brettviren/ptmp][PTMP]].
 
 * Source
 
-This project includes ProtoDuneTrigger (as [[./pdt]]) and ~waftools~ (as [[./tools]]) as git submodules.  
+Functions may be provided as C++ source files held in other Git repos
+which are then integrated into ~ptmp-tcs~ via ~git-subrepo~.  This allows
+the original authors to continue to develop the code as needed while
+~ptmp-tcs~ provides an integration path to DAQ running at ProtoDUNE.
+
+Each repo is connected into a sub directory of this project
+
+- [[pdt/]] :: https://github.com/dlast44/ProtoDuneTrigger 
+- [[met/]] :: https://github.com/IrisP25/MichelElectronTriggering
+
 
 * Build
 
